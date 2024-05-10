@@ -10,7 +10,7 @@ namespace TrelloTenderManager.Core.UnitTests.Implementations
     {
         private readonly CsvHelperWrapper _csvHelperWrapper = new();
 
-        [Fact]
+        [Fact, Trait("Category", "UnitTests")]
         public void GetRecords_ValidData()
         {
             // Arrange
@@ -25,7 +25,7 @@ namespace TrelloTenderManager.Core.UnitTests.Implementations
             Assert.Equal(numberOfRecords, csvRecords.Count);
         }
 
-        [Fact]
+        [Fact, Trait("Category", "UnitTests")]
         public void GetRecords_1RecordAllFieldsEmpty()
         {
             // Arrange
@@ -41,7 +41,7 @@ namespace TrelloTenderManager.Core.UnitTests.Implementations
             Assert.Equal(numberOfRecords + 1, csvRecords.Count);
         }
 
-        [Fact]
+        [Fact, Trait("Category", "UnitTests")]
         public void GetRecords_1RecordMissingFields()
         {
             // Arrange
@@ -57,7 +57,7 @@ namespace TrelloTenderManager.Core.UnitTests.Implementations
             Assert.Equal(numberOfRecords + 1, csvRecords.Count);
         }
 
-        [Fact]
+        [Fact, Trait("Category", "UnitTests")]
         public void GetRecords_1RecordBadData()
         {
             // Arrange

@@ -18,7 +18,7 @@ namespace TrelloTenderManager.Core.UnitTests.Implementations
             _tenderCsvParser = new TenderCsvParser(_csvHelperWrapper.Object);
         }
 
-        [Fact]
+        [Fact, Trait("Category", "UnitTests")]
         public void GetRecords_ValidData()
         {
             // Arrange
@@ -37,7 +37,7 @@ namespace TrelloTenderManager.Core.UnitTests.Implementations
             Assert.Equal(numberOfRecords, csvRecords.Count);
         }
 
-        [Fact]
+        [Fact, Trait("Category", "UnitTests")]
         public void GetRecords_1RecordBadData()
         {
             // Arrange
