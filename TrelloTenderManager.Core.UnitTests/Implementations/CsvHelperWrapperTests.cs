@@ -4,74 +4,73 @@ using TrelloTenderManager.Core.UnitTests.Factories;
 using TrelloTenderManager.Domain.CsvClassMaps;
 using TrelloTenderManager.Domain.Models;
 
-namespace TrelloTenderManager.Core.UnitTests.Implementations
+namespace TrelloTenderManager.Core.UnitTests.Implementations;
+
+public class CsvHelperWrapperTests
 {
-    public class CsvHelperWrapperTests
+    private readonly CsvHelperWrapper _csvHelperWrapper = new();
+
+    [Fact, Trait("Category", "UnitTests")]
+    public void GetRecords_ValidData()
     {
-        private readonly CsvHelperWrapper _csvHelperWrapper = new();
+        // Arrange
+        const int numberOfRecords = 3;
 
-        [Fact, Trait("Category", "UnitTests")]
-        public void GetRecords_ValidData()
-        {
-            // Arrange
-            const int numberOfRecords = 3;
+        var stringBuilder = CsvRecordFactory.Generate(numberOfRecords);
 
-            var stringBuilder = CsvRecordFactory.Generate(numberOfRecords);
+        // Act
+        var csvRecords = _csvHelperWrapper.GetRecords<Tender>(stringBuilder.ToString(), typeof(TenderMap));
 
-            // Act
-            var csvRecords = _csvHelperWrapper.GetRecords<Tender>(stringBuilder.ToString(), typeof(TenderMap));
+        // Assert
+        Assert.Equal(numberOfRecords, csvRecords.Count);
+    }
 
-            // Assert
-            Assert.Equal(numberOfRecords, csvRecords.Count);
-        }
+    [Fact, Trait("Category", "UnitTests")]
+    public void GetRecords_1RecordAllFieldsEmpty()
+    {
+        // Arrange
+        const int numberOfRecords = 3;
 
-        [Fact, Trait("Category", "UnitTests")]
-        public void GetRecords_1RecordAllFieldsEmpty()
-        {
-            // Arrange
-            const int numberOfRecords = 3;
+        var stringBuilder = CsvRecordFactory.Generate(numberOfRecords);
+        stringBuilder.AppendLine(",,,,,,,,,,,,");
 
-            var stringBuilder = CsvRecordFactory.Generate(numberOfRecords);
-            stringBuilder.AppendLine(",,,,,,,,,,,,");
+        // Act
+        var csvRecords = _csvHelperWrapper.GetRecords<Tender>(stringBuilder.ToString(), typeof(TenderMap));
 
-            // Act
-            var csvRecords = _csvHelperWrapper.GetRecords<Tender>(stringBuilder.ToString(), typeof(TenderMap));
+        // Assert
+        Assert.Equal(numberOfRecords + 1, csvRecords.Count);
+    }
 
-            // Assert
-            Assert.Equal(numberOfRecords + 1, csvRecords.Count);
-        }
+    [Fact, Trait("Category", "UnitTests")]
+    public void GetRecords_1RecordMissingFields()
+    {
+        // Arrange
+        const int numberOfRecords = 3;
 
-        [Fact, Trait("Category", "UnitTests")]
-        public void GetRecords_1RecordMissingFields()
-        {
-            // Arrange
-            const int numberOfRecords = 3;
-
-            var stringBuilder = CsvRecordFactory.Generate(numberOfRecords);
-            stringBuilder.AppendLine(",,,");
+        var stringBuilder = CsvRecordFactory.Generate(numberOfRecords);
+        stringBuilder.AppendLine(",,,");
             
-            // Act
-            var csvRecords = _csvHelperWrapper.GetRecords<Tender>(stringBuilder.ToString(), typeof(TenderMap));
+        // Act
+        var csvRecords = _csvHelperWrapper.GetRecords<Tender>(stringBuilder.ToString(), typeof(TenderMap));
 
-            // Assert
-            Assert.Equal(numberOfRecords + 1, csvRecords.Count);
-        }
+        // Assert
+        Assert.Equal(numberOfRecords + 1, csvRecords.Count);
+    }
 
-        [Fact, Trait("Category", "UnitTests")]
-        public void GetRecords_1RecordBadData()
-        {
-            // Arrange
-            const int numberOfRecords = 3;
+    [Fact, Trait("Category", "UnitTests")]
+    public void GetRecords_1RecordBadData()
+    {
+        // Arrange
+        const int numberOfRecords = 3;
 
-            var stringBuilder = CsvRecordFactory.Generate(numberOfRecords);
-            stringBuilder.AppendLine($"{Guid.NewGuid()},\",,1,");
+        var stringBuilder = CsvRecordFactory.Generate(numberOfRecords);
+        stringBuilder.AppendLine($"{Guid.NewGuid()},\",,1,");
 
-            // Assert
-            Assert.Throws<BadDataException>(Action);
-            return;
+        // Assert
+        Assert.Throws<BadDataException>(Action);
+        return;
 
-            // Act
-            void Action() => _csvHelperWrapper.GetRecords<Tender>(stringBuilder.ToString(), typeof(TenderMap));
-        }
+        // Act
+        void Action() => _csvHelperWrapper.GetRecords<Tender>(stringBuilder.ToString(), typeof(TenderMap));
     }
 }

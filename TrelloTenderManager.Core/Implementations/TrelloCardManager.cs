@@ -1,18 +1,22 @@
 ﻿using TrelloTenderManager.Core.Interfaces;
+using TrelloTenderManager.Domain.Models;
 
 namespace TrelloTenderManager.Core.Implementations;
 
-public class TrelloCardManager(ITenderCsvParser tenderCsvParser)
+public class TrelloCardManager : ITrelloCardManager
 {
-    public void PopulateFromCsvFileContent(string fileContent)
+    public void Create(Tender tender)
     {
-        var tenders = tenderCsvParser.Parse(fileContent);
+        throw new System.NotImplementedException();
+    }
 
-        var tenderValidationResult = TenderValidator.Validate(tenders);
+    public void Update(Tender tender)
+    {
+        throw new System.NotImplementedException();
+    }
 
-        foreach (var tender in tenderValidationResult.ValidTenders)
-        {
-            // Create Trello card
-        }
+    public bool Exists(Tender tender)
+    {
+        throw new System.NotImplementedException();
     }
 }

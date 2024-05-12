@@ -1,7 +1,6 @@
-﻿namespace TrelloTenderManager.Core.Interfaces
+﻿namespace TrelloTenderManager.Core.Interfaces;
+
+public interface ICsvHelperWrapper
 {
-    public interface ICsvHelperWrapper
-    {
-        List<T> GetRecords<T>(string fileContent, Type? classMapType);
-    }
+    List<T> GetRecords<T>(string fileContent, Type? classMapType);
 }

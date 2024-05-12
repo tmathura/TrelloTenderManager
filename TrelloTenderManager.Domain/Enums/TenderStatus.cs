@@ -1,10 +1,9 @@
-﻿namespace TrelloTenderManager.Domain.Enums
+﻿namespace TrelloTenderManager.Domain.Enums;
+
+public enum TenderStatus
 {
-    public enum TenderStatus
-    {
-        Unknown = 0,
-        Open = 1,
-        Pending = 2,
-        Closed = 3
-    }
+    Unknown = 0,
+    Open = 1,
+    Pending = 2,
+    Closed = 3
 }
