@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CsvHelper" Version="32.0.2" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\TrelloTenderManager.Domain\TrelloTenderManager.Domain.csproj" />
   </ItemGroup>
 
