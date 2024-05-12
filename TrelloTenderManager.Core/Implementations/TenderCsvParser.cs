@@ -4,7 +4,7 @@ using TrelloTenderManager.Domain.Models;
 
 namespace TrelloTenderManager.Core.Implementations
 {
-    public class TenderCsvParser(ICsvHelperWrapper csvHelperWrapper)
+    public class TenderCsvParser(ICsvHelperWrapper csvHelperWrapper) : ITenderCsvParser
     {
         public List<Tender> Parse(string fileContent)
         {
