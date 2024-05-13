@@ -5,10 +5,20 @@ using TrelloTenderManager.Domain.Models;
 
 namespace TrelloTenderManager.Core.Implementations;
 
+/// <summary>
+/// Manages the custom fields on a Trello board.
+/// </summary>
+/// <remarks>
+/// Initializes a new instance of the <see cref="CustomFieldOnBoardManager"/> class.
+/// </remarks>
+/// <param name="trelloDotNetWrapper">The TrelloDotNetWrapper instance.</param>
+/// <param name="boardId">The ID of the Trello board.</param>
 public class CustomFieldOnBoardManager(ITrelloDotNetWrapper trelloDotNetWrapper, string boardId) : ICustomFieldOnBoardManager
 {
+    /// <inheritdoc />
     public HashSet<CustomField> CustomFieldsOnBoard { get; } = [];
-    
+
+    /// <inheritdoc />
     public void Setup()
     {
         var customFieldsOnBoard = trelloDotNetWrapper.GetCustomFieldsOnBoard(boardId).Result;
@@ -42,6 +52,10 @@ public class CustomFieldOnBoardManager(ITrelloDotNetWrapper trelloDotNetWrapper,
         }
     }
 
+    /// <summary>
+    /// Creates the custom fields on the board.
+    /// </summary>
+    /// <param name="properties">The properties to create custom fields from.</param>
     private void CreateCustomFieldsOnBoard(IEnumerable<PropertyInfo> properties)
     {
         foreach (var property in properties)

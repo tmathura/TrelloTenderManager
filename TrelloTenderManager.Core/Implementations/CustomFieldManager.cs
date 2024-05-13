@@ -5,10 +5,16 @@ using TrelloTenderManager.Domain.Models;
 
 namespace TrelloTenderManager.Core.Implementations;
 
+/// <summary>
+/// Manages the custom fields on a Trello card based on the properties of a Tender object.
+/// </summary>
+/// <param name="trelloDotNetWrapper">The TrelloDotNetWrapper instance.</param>
+/// <param name="customFieldOnBoardManager">The CustomFieldOnBoardManager instance.</param>
 public class CustomFieldManager(ITrelloDotNetWrapper trelloDotNetWrapper, ICustomFieldOnBoardManager customFieldOnBoardManager) : ICustomFieldManager
 {
     private readonly PropertyInfo[] _properties = typeof(Tender).GetProperties();
 
+    /// <inheritdoc />
     public async Task UpdateCustomFieldsOnCard(Tender tender, Card card)
     {
         foreach (var property in _properties)
@@ -32,6 +38,12 @@ public class CustomFieldManager(ITrelloDotNetWrapper trelloDotNetWrapper, ICusto
         }
     }
 
+    /// <summary>
+    /// Converts the property value to a string representation.
+    /// </summary>
+    /// <param name="property">The PropertyInfo object representing the property.</param>
+    /// <param name="value">The value of the property.</param>
+    /// <returns>The string representation of the property value.</returns>
     public static string? GetPropertyValueAsString(PropertyInfo property, object? value)
     {
         string? valueAsString = null;

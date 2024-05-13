@@ -2,8 +2,16 @@
 
 namespace TrelloTenderManager.Core.Implementations;
 
+/// <summary>
+/// Provides methods to validate a list of tenders.
+/// </summary>
 public static class TenderValidator
 {
+    /// <summary>
+    /// Validates a list of tenders and returns the validation result.
+    /// </summary>
+    /// <param name="tenders">The list of tenders to validate.</param>
+    /// <returns>The validation result containing the valid and invalid tenders.</returns>
     public static TenderValidationResult Validate(List<Tender> tenders)
     {
         List<Tender> validTenders = [];
@@ -26,6 +34,11 @@ public static class TenderValidator
         return tenderValidationResult;
     }
 
+    /// <summary>
+    /// Validates a single tender.
+    /// </summary>
+    /// <param name="tender">The tender to validate.</param>
+    /// <returns><c>true</c> if the tender is valid; otherwise, <c>false</c>.</returns>
     private static bool Validate(Tender? tender)
     {
         if (tender is null)

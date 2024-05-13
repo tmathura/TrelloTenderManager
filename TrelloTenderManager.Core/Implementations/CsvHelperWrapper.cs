@@ -5,8 +5,12 @@ using TrelloTenderManager.Core.Interfaces;
 
 namespace TrelloTenderManager.Core.Implementations;
 
+/// <summary>
+/// Wrapper class for CsvHelper library.
+/// </summary>
 public class CsvHelperWrapper : ICsvHelperWrapper
 {
+    /// <inheritdoc />
     public List<T> GetRecords<T>(string fileContent, Type? classMapType)
     {
         using var stringReader = new StringReader(fileContent);
@@ -22,7 +26,7 @@ public class CsvHelperWrapper : ICsvHelperWrapper
         }
 
         var records = csvReader.GetRecords<T>().ToList();
-            
+
         return records;
     }
 }
