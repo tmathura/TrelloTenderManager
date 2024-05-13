@@ -33,7 +33,7 @@ public class TenderValidatorTests
         // Arrange
         var tenders = new List<Tender>
         {
-            null,
+            null!,
             new() { Id = Guid.Empty, TenderId = Faker.Random.Guid(), Name = "Tender 1", TenderName = "Tender Name 1" },
             new() { Id = Faker.Random.Guid(), TenderId = Guid.Empty, Name = "Tender 2", TenderName = "Tender Name 2" },
             new() { Id = Faker.Random.Guid(), TenderId = Faker.Random.Guid(), Name = "Tender 3", TenderName = "" },
@@ -61,7 +61,7 @@ public class TenderValidatorTests
 
         var invalidTenders = new List<Tender>
         {
-            null,
+            null!,
             new() { Id = Guid.Empty, TenderId = Faker.Random.Guid(), Name = "Tender 1", TenderName = "Tender Name 1" },
             new() { Id = Faker.Random.Guid(), TenderId = Guid.Empty, Name = "Tender 2", TenderName = "Tender Name 2" },
             new() { Id = Faker.Random.Guid(), TenderId = Faker.Random.Guid(), Name = "Tender 3", TenderName = "" },
