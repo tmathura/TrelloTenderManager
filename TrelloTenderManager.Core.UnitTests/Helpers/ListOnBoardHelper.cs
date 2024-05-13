@@ -6,7 +6,6 @@ namespace TrelloTenderManager.Core.UnitTests.Helpers;
 
 public static class ListOnBoardHelper
 {
-
     public static List<List> GenerateBoardLists(IEnumerable<TenderStatus> tenderStatuses, bool includeId, bool includeName)
     {
         var listsOnBoard = new List<List>();

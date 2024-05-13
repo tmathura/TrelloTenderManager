@@ -7,7 +7,6 @@ namespace TrelloTenderManager.Core.Implementations;
 
 public class CustomFieldOnBoardManager(ITrelloDotNetWrapper trelloDotNetWrapper, string boardId) : ICustomFieldOnBoardManager
 {
-
     public HashSet<CustomField> CustomFieldsOnBoard { get; } = [];
     
     public void Setup()

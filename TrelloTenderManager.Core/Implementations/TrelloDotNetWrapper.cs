@@ -1,5 +1,6 @@
 ﻿using TrelloDotNet;
 using TrelloDotNet.Model;
+using TrelloDotNet.Model.Search;
 using TrelloTenderManager.Core.Interfaces;
 
 namespace TrelloTenderManager.Core.Implementations;
@@ -57,13 +58,37 @@ public class TrelloDotNetWrapper(string apiKey, string token) : ITrelloDotNetWra
 
     public async Task<Card> AddCard(Card card)
     {
-        var newCard = await _trelloClient.AddCardAsync(card);
+        var cardResult = await _trelloClient.AddCardAsync(card);
 
-        return newCard;
+        return cardResult;
     }
 
-    public async Task UpdateCustomFieldValueOnCard(string cardId, CustomField customField, bool newValue)
+    public async Task<Card> UpdateCard(Card card)
+    {
+        var cardResult = await _trelloClient.UpdateCardAsync(card);
+
+        return cardResult;
+    }
+
+    public async Task UpdateCustomFieldValueOnCard(string cardId, CustomField customField, string newValue)
     {
         await _trelloClient.UpdateCustomFieldValueOnCardAsync(cardId, customField, newValue);
+    }
+
+    public async Task<Card?> SearchOnCard(string boardId, string searchTerm)
+    {
+        var searchRequest = new SearchRequest(searchTerm, partialSearch: false)
+        {
+            BoardFilter = new SearchRequestBoardFilter(boardId),
+            SearchCards = true,
+            SearchBoards = false,
+            SearchOrganizations = false,
+            CardLimit = 5,
+            CardFields = new SearchRequestCardFields("desc")
+        };
+
+        var searchResult = await _trelloClient.SearchAsync(searchRequest);
+
+        return searchResult.Cards.FirstOrDefault();
     }
 }

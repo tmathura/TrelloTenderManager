@@ -4,7 +4,7 @@ namespace TrelloTenderManager.Core.Implementations;
 
 public class TrelloTenderManager(ITenderCsvParser tenderCsvParser, ICardManager cardManager)
 {
-    public void PopulateCardsFromCsvFileContent(string fileContent)
+    public async Task PopulateCardsFromCsvFileContent(string fileContent)
     {
         var tenders = tenderCsvParser.Parse(fileContent);
 
@@ -12,12 +12,13 @@ public class TrelloTenderManager(ITenderCsvParser tenderCsvParser, ICardManager 
 
         foreach (var tender in tenderValidationResult.ValidTenders)
         {
-            if (cardManager.Exists(tender))
+            var card = await cardManager.Exists(tender);
+            if (card is not null)
             {
-                cardManager.Update(tender);
+                await cardManager.Update(card, tender);
             } else
             {
-                cardManager.Create("", tender);
+                await cardManager.Create(tender);
             }
         }
     }

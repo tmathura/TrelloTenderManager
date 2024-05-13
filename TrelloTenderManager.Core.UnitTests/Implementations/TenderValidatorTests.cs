@@ -6,7 +6,7 @@ namespace TrelloTenderManager.Core.UnitTests.Implementations;
 
 public class TenderValidatorTests
 {
-    private static readonly Faker Faker = new();
+    private readonly Faker _faker = new();
 
     [Fact, Trait("Category", "UnitTests")]
     public void Validate_ValidTenders_ReturnsValidTenderValidationResult()
@@ -14,9 +14,9 @@ public class TenderValidatorTests
         // Arrange
         var tenders = new List<Tender>
         {
-            new() { Id = Faker.Random.Guid(), TenderId = Faker.Random.Guid(), Name = Faker.Company.CompanyName(), TenderName = Faker.Random.Words(3) },
-            new() { Id = Faker.Random.Guid(), TenderId = Faker.Random.Guid(), Name = Faker.Company.CompanyName(), TenderName = Faker.Random.Words(3) },
-            new() { Id = Faker.Random.Guid(), TenderId = Faker.Random.Guid(), Name = Faker.Company.CompanyName(), TenderName = Faker.Random.Words(3) }
+            new() { Id = _faker.Random.Guid(), TenderId = _faker.Random.Guid(), Name = _faker.Company.CompanyName(), TenderName = _faker.Random.Words(3) },
+            new() { Id = _faker.Random.Guid(), TenderId = _faker.Random.Guid(), Name = _faker.Company.CompanyName(), TenderName = _faker.Random.Words(3) },
+            new() { Id = _faker.Random.Guid(), TenderId = _faker.Random.Guid(), Name = _faker.Company.CompanyName(), TenderName = _faker.Random.Words(3) }
         };
 
         // Act
@@ -34,10 +34,10 @@ public class TenderValidatorTests
         var tenders = new List<Tender>
         {
             null!,
-            new() { Id = Guid.Empty, TenderId = Faker.Random.Guid(), Name = "Tender 1", TenderName = "Tender Name 1" },
-            new() { Id = Faker.Random.Guid(), TenderId = Guid.Empty, Name = "Tender 2", TenderName = "Tender Name 2" },
-            new() { Id = Faker.Random.Guid(), TenderId = Faker.Random.Guid(), Name = "Tender 3", TenderName = "" },
-            new() { Id = Faker.Random.Guid(), TenderId = Faker.Random.Guid(), Name = "", TenderName = "Tender Name 4" }
+            new() { Id = Guid.Empty, TenderId = _faker.Random.Guid(), Name = "Tender 1", TenderName = "Tender Name 1" },
+            new() { Id = _faker.Random.Guid(), TenderId = Guid.Empty, Name = "Tender 2", TenderName = "Tender Name 2" },
+            new() { Id = _faker.Random.Guid(), TenderId = _faker.Random.Guid(), Name = "Tender 3", TenderName = "" },
+            new() { Id = _faker.Random.Guid(), TenderId = _faker.Random.Guid(), Name = "", TenderName = "Tender Name 4" }
         };
 
         // Act
@@ -54,18 +54,18 @@ public class TenderValidatorTests
         // Arrange
         var tenders = new List<Tender>
         {
-            new() { Id = Faker.Random.Guid(), TenderId = Faker.Random.Guid(), Name = Faker.Company.CompanyName(), TenderName = Faker.Random.Words(3) },
-            new() { Id = Faker.Random.Guid(), TenderId = Faker.Random.Guid(), Name = Faker.Company.CompanyName(), TenderName = Faker.Random.Words(3) },
-            new() { Id = Faker.Random.Guid(), TenderId = Faker.Random.Guid(), Name = Faker.Company.CompanyName(), TenderName = Faker.Random.Words(3) }
+            new() { Id = _faker.Random.Guid(), TenderId = _faker.Random.Guid(), Name = _faker.Company.CompanyName(), TenderName = _faker.Random.Words(3) },
+            new() { Id = _faker.Random.Guid(), TenderId = _faker.Random.Guid(), Name = _faker.Company.CompanyName(), TenderName = _faker.Random.Words(3) },
+            new() { Id = _faker.Random.Guid(), TenderId = _faker.Random.Guid(), Name = _faker.Company.CompanyName(), TenderName = _faker.Random.Words(3) }
         };
 
         var invalidTenders = new List<Tender>
         {
             null!,
-            new() { Id = Guid.Empty, TenderId = Faker.Random.Guid(), Name = "Tender 1", TenderName = "Tender Name 1" },
-            new() { Id = Faker.Random.Guid(), TenderId = Guid.Empty, Name = "Tender 2", TenderName = "Tender Name 2" },
-            new() { Id = Faker.Random.Guid(), TenderId = Faker.Random.Guid(), Name = "Tender 3", TenderName = "" },
-            new() { Id = Faker.Random.Guid(), TenderId = Faker.Random.Guid(), Name = "", TenderName = "Tender Name 4" }
+            new() { Id = Guid.Empty, TenderId = _faker.Random.Guid(), Name = "Tender 1", TenderName = "Tender Name 1" },
+            new() { Id = _faker.Random.Guid(), TenderId = Guid.Empty, Name = "Tender 2", TenderName = "Tender Name 2" },
+            new() { Id = _faker.Random.Guid(), TenderId = _faker.Random.Guid(), Name = "Tender 3", TenderName = "" },
+            new() { Id = _faker.Random.Guid(), TenderId = _faker.Random.Guid(), Name = "", TenderName = "Tender Name 4" }
         };
 
         tenders.AddRange(invalidTenders);

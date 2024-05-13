@@ -1,10 +1,11 @@
-﻿using TrelloTenderManager.Domain.Models;
+﻿using TrelloDotNet.Model;
+using TrelloTenderManager.Domain.Models;
 
 namespace TrelloTenderManager.Core.Interfaces;
 
 public interface ICardManager
 {
-    Task Create(string cardListId, Tender tender);
-    void Update(Tender tender);
-    bool Exists(Tender tender);
+    Task<Card> Create(Tender tender);
+    Task Update(Card card, Tender tender);
+    Task<Card?> Exists(Tender tender);
 }

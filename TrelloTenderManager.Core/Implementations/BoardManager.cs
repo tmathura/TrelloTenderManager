@@ -9,6 +9,7 @@ public class BoardManager : IBoardManager
 {
     private readonly IListOnBoardManager _listOnBoardManager;
     private readonly ICustomFieldOnBoardManager _customFieldOnBoardManager;
+    public string BoardId { get; }
     public Dictionary<TenderStatus, List> TenderStatusToListsOnBoardMapping => _listOnBoardManager.TenderStatusToListsOnBoardMapping;
     public HashSet<CustomField> CustomFieldsOnBoard => _customFieldOnBoardManager.CustomFieldsOnBoard;
 
@@ -16,6 +17,8 @@ public class BoardManager : IBoardManager
     {
         _listOnBoardManager = listOnBoardManager;
         _customFieldOnBoardManager = customFieldOnBoardManager;
+
+        BoardId = boardId;
 
         SetUp(boardId);
     }

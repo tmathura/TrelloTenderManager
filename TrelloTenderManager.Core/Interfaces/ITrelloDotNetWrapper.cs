@@ -9,5 +9,7 @@ public interface ITrelloDotNetWrapper
     Task<List?> AddList(string boardId, string listName);
     Task<CustomField?> AddCustomFieldToBoard(string boardId, string customFieldName, Type type);
     Task<Card> AddCard(Card card);
-    Task UpdateCustomFieldValueOnCard(string cardId, CustomField customField, bool newValue);
+    Task<Card> UpdateCard(Card card);
+    Task UpdateCustomFieldValueOnCard(string cardId, CustomField customField, string newValue);
+    Task<Card?> SearchOnCard(string boardId, string searchTerm);
 }
