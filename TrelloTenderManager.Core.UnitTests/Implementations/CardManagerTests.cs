@@ -51,7 +51,7 @@ namespace TrelloTenderManager.Core.UnitTests.Implementations
             _customFieldManagerMock.Verify(customFieldManager => customFieldManager.UpdateCustomFieldsOnCard(tender, expectedCard), Times.Once);
         }
 
-        [Fact]
+        [Fact, Trait("Category", "UnitTests")]
         public async Task Update_Valid()
         {
             // Arrange
@@ -75,7 +75,7 @@ namespace TrelloTenderManager.Core.UnitTests.Implementations
             _customFieldManagerMock.Verify(customFieldManager => customFieldManager.UpdateCustomFieldsOnCard(tender, expectedCard), Times.Once);
         }
 
-        [Fact]
+        [Fact, Trait("Category", "UnitTests")]
         public async Task Exists_Found()
         {
             // Arrange
@@ -92,7 +92,7 @@ namespace TrelloTenderManager.Core.UnitTests.Implementations
             _trelloDotNetWrapperMock.Verify(trelloDotNetWrapper => trelloDotNetWrapper.SearchOnCard(It.IsAny<string>(), CardManager.GetCardDescription(tender)), Times.Once);
         }
 
-        [Fact]
+        [Fact, Trait("Category", "UnitTests")]
         public async Task Exists_NotFound()
         {
             // Arrange
