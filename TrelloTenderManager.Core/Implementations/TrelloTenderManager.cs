@@ -2,7 +2,7 @@
 
 namespace TrelloTenderManager.Core.Implementations;
 
-public class TrelloTenderManager(ITenderCsvParser tenderCsvParser, ITrelloCardManager trelloCardManager)
+public class TrelloTenderManager(ITenderCsvParser tenderCsvParser, ICardManager cardManager)
 {
     public void PopulateCardsFromCsvFileContent(string fileContent)
     {
@@ -12,12 +12,12 @@ public class TrelloTenderManager(ITenderCsvParser tenderCsvParser, ITrelloCardMa
 
         foreach (var tender in tenderValidationResult.ValidTenders)
         {
-            if (trelloCardManager.Exists(tender))
+            if (cardManager.Exists(tender))
             {
-                trelloCardManager.Update(tender);
+                cardManager.Update(tender);
             } else
             {
-                trelloCardManager.Create(tender);
+                cardManager.Create("", tender);
             }
         }
     }

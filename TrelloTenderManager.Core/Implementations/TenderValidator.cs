@@ -28,7 +28,7 @@ public static class TenderValidator
 
     private static bool Validate(Tender? tender)
     {
-        if (tender == null)
+        if (tender is null)
         {
             return false;
         }

@@ -8,7 +8,7 @@ public class TenderValidatorTests
 {
     private static readonly Faker Faker = new();
 
-    [Fact]
+    [Fact, Trait("Category", "UnitTests")]
     public void Validate_ValidTenders_ReturnsValidTenderValidationResult()
     {
         // Arrange
@@ -27,7 +27,7 @@ public class TenderValidatorTests
         Assert.Empty(result.InvalidTenders);
     }
 
-    [Fact]
+    [Fact, Trait("Category", "UnitTests")]
     public void Validate_InvalidTenders_ReturnsInvalidTenderValidationResult()
     {
         // Arrange
@@ -48,7 +48,7 @@ public class TenderValidatorTests
         Assert.Equal(tenders.Count, result.InvalidTenders.Count);
     }
 
-    [Fact]
+    [Fact, Trait("Category", "UnitTests")]
     public void Validate_ValidAndInvalidTenders_ReturnsValidAndInvalidTenderValidationResult()
     {
         // Arrange

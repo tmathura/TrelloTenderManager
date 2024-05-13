@@ -2,9 +2,9 @@
 
 namespace TrelloTenderManager.Core.Interfaces;
 
-public interface ITrelloCardManager
+public interface ICardManager
 {
-    void Create(Tender tender);
+    Task Create(string cardListId, Tender tender);
     void Update(Tender tender);
     bool Exists(Tender tender);
 }

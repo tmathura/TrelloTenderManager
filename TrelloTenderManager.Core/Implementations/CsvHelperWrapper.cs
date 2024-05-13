@@ -16,7 +16,7 @@ public class CsvHelperWrapper : ICsvHelperWrapper
         };
         using var csvReader = new CsvReader(stringReader, csvConfiguration);
 
-        if (classMapType != null)
+        if (classMapType is not null)
         {
             csvReader.Context.RegisterClassMap(classMapType);
         }
