@@ -1,26 +1,52 @@
-﻿using TrelloDotNet.Model;
+﻿using Microsoft.Extensions.Configuration;
+using TrelloDotNet.Model;
 using TrelloTenderManager.Core.Interfaces;
 using TrelloTenderManager.Domain.Enums;
+using TrelloTenderManager.Domain.Exceptions;
 
 namespace TrelloTenderManager.Core.Implementations;
 
 /// <summary>
-/// Manages the lists on a Trello board based on the tender status.
+/// Represents a manager for lists on a Trello board.
 /// </summary>
-/// <remarks>
-/// Initializes a new instance of the <see cref="ListOnBoardManager"/> class.
-/// </remarks>
-/// <param name="trelloDotNetWrapper">The TrelloDotNetWrapper instance.</param>
-/// <param name="boardId">The ID of the Trello board.</param>
-public class ListOnBoardManager(ITrelloDotNetWrapper trelloDotNetWrapper, string boardId) : IListOnBoardManager
+public class ListOnBoardManager : IListOnBoardManager
 {
+    /// <summary>
+    /// The TrelloDotNetWrapper instance.
+    /// </summary>
+    private readonly ITrelloDotNetWrapper _trelloDotNetWrapper;
+
+    /// <summary>
+    /// The ID of the Trello board.
+    /// </summary>
+    private static string _boardId = string.Empty;
+
     /// <inheritdoc />
     public Dictionary<TenderStatus, List> TenderStatusToListsOnBoardMapping { get; } = [];
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ListOnBoardManager"/> class.
+    /// </summary>
+    /// <param name="configuration">The configuration instance.</param>
+    /// <param name="trelloDotNetWrapper">The TrelloDotNetWrapper instance.</param>
+    /// <exception cref="AppSettingsException">Thrown when an error occurs getting the board ID from the configuration.</exception>
+    public ListOnBoardManager(IConfiguration configuration, ITrelloDotNetWrapper trelloDotNetWrapper)
+    {
+        _trelloDotNetWrapper = trelloDotNetWrapper;
+        var boardId = configuration["Trello:BoardId"];
+
+        if (string.IsNullOrWhiteSpace(boardId))
+        {
+            throw new AppSettingsException("Error getting board ID from configuration.");
+        }
+
+        _boardId = boardId;
+    }
 
     /// <inheritdoc />
     public void Setup()
     {
-        var listsOnBoard = trelloDotNetWrapper.GetListsOnBoard(boardId).Result;
+        var listsOnBoard = _trelloDotNetWrapper.GetListsOnBoard(_boardId).Result;
         var tenderStatuses = Enum.GetValues(typeof(TenderStatus)).Cast<TenderStatus>().Reverse().ToList();
 
         if (listsOnBoard is null || listsOnBoard.Count == 0)
@@ -59,7 +85,7 @@ public class ListOnBoardManager(ITrelloDotNetWrapper trelloDotNetWrapper, string
     {
         foreach (var tenderStatus in tenderStatuses)
         {
-            var listOnBoard = trelloDotNetWrapper.AddList(boardId, tenderStatus.ToString()).Result;
+            var listOnBoard = _trelloDotNetWrapper.AddList(_boardId, tenderStatus.ToString()).Result;
 
             if (string.IsNullOrWhiteSpace(listOnBoard?.Id))
             {

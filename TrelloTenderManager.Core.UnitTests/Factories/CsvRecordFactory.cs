@@ -4,10 +4,18 @@ using TrelloTenderManager.Domain.Enums;
 
 namespace TrelloTenderManager.Core.UnitTests.Factories;
 
+/// <summary>
+/// Factory class for generating CSV records.
+/// </summary>
 public static class CsvRecordFactory
 {
     private static readonly Faker Faker = new();
 
+    /// <summary>
+    /// Generates a specified number of CSV records.
+    /// </summary>
+    /// <param name="numberOfRecords">The number of records to generate.</param>
+    /// <returns>A StringBuilder containing the generated CSV records.</returns>
     public static StringBuilder Generate(int numberOfRecords)
     {
         var stringBuilder = new StringBuilder();

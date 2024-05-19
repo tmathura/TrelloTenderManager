@@ -2,6 +2,7 @@
 using TrelloDotNet.Model;
 using TrelloTenderManager.Core.Interfaces;
 using TrelloTenderManager.Domain.Models;
+using TrelloTenderManager.Domain.Models.CustomFields;
 
 namespace TrelloTenderManager.Core.Implementations;
 
@@ -17,6 +18,8 @@ public class CustomFieldManager(ITrelloDotNetWrapper trelloDotNetWrapper, ICusto
     /// <inheritdoc />
     public async Task UpdateCustomFieldsOnCard(Tender tender, Card card)
     {
+        var customFieldItems = new List<Domain.Models.CustomFields.CustomFieldItem>();
+
         foreach (var property in _properties)
         {
             try
@@ -26,16 +29,33 @@ public class CustomFieldManager(ITrelloDotNetWrapper trelloDotNetWrapper, ICusto
 
                 var valueAsString = GetPropertyValueAsString(property, value);
 
-                if (!string.IsNullOrWhiteSpace(valueAsString))
+                if (string.IsNullOrWhiteSpace(valueAsString)) continue;
+
+                var propertyType = property.PropertyType;
+                
+                CustomFieldValue customFieldValue = propertyType switch
                 {
-                    await trelloDotNetWrapper.UpdateCustomFieldValueOnCard(card.Id, customField, valueAsString);
-                }
+                    _ when propertyType == typeof(bool) || propertyType == typeof(bool?) => new CustomFieldValueChecked { Checked = valueAsString },
+                    _ when propertyType == typeof(decimal) || propertyType == typeof(decimal?) => new CustomFieldValueNumber { Number = valueAsString },
+                    _ when propertyType == typeof(DateTime) || propertyType == typeof(DateTime?) => new CustomFieldValueDate { Date = valueAsString },
+                    _ => new CustomFieldValueText { Text = valueAsString }
+                };
+
+                var customFieldItem = new Domain.Models.CustomFields.CustomFieldItem
+                {
+                    IdCustomField = customField.Id,
+                    Value = customFieldValue
+                };
+
+                customFieldItems.Add(customFieldItem);
             }
             catch (Exception exception)
             {
-                throw new Exception($"Error updating custom field {property.Name} on card {card.Id}", exception);
+                throw new Exception($"Error building custom field {property.Name} on card {card.Id}", exception);
             }
         }
+
+        await trelloDotNetWrapper.UpdateCustomFieldsValueOnCard(card.Id, customFieldItems);
     }
 
     /// <summary>

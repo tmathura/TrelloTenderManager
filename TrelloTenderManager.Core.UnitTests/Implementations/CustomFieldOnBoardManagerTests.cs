@@ -1,21 +1,30 @@
+using Microsoft.Extensions.Configuration;
 using Moq;
 using TrelloDotNet.Model;
 using TrelloTenderManager.Core.Implementations;
 using TrelloTenderManager.Core.Interfaces;
 using TrelloTenderManager.Core.UnitTests.Helpers;
+using TrelloTenderManager.Domain.Exceptions;
 using TrelloTenderManager.Domain.Models;
 
 namespace TrelloTenderManager.Core.UnitTests.Implementations;
 
 public class CustomFieldOnBoardManagerTests
 {
+    private const string BoardId = "MyBoard1989";
+
+    private readonly Mock<IConfiguration> _configurationMock;
     private readonly Mock<ITrelloDotNetWrapper> _trelloDotNetWrapperMock;
     private readonly CustomFieldOnBoardManager _customFieldOnBoardManager;
 
     public CustomFieldOnBoardManagerTests()
     {
+        _configurationMock = new Mock<IConfiguration>();
+        _configurationMock.Setup(c => c["Trello:BoardId"]).Returns(BoardId);
+
         _trelloDotNetWrapperMock = new Mock<ITrelloDotNetWrapper>();
-        _customFieldOnBoardManager = new CustomFieldOnBoardManager(_trelloDotNetWrapperMock.Object, It.IsAny<string>());
+
+        _customFieldOnBoardManager = new CustomFieldOnBoardManager(_configurationMock.Object, _trelloDotNetWrapperMock.Object);
     }
 
     [Fact, Trait("Category", "UnitTests")]
@@ -120,6 +129,21 @@ public class CustomFieldOnBoardManagerTests
 
         // Act
         void Action() => _customFieldOnBoardManager.Setup();
+    }
+
+    [Fact, Trait("Category", "UnitTests")]
+    public void SetUp_Should_Throw_AppSettingsException_When_No_BoardId()
+    {
+        // Arrange
+        _configurationMock.Setup(c => c["Trello:BoardId"]).Returns(string.Empty);
+
+        // Assert
+        var exception = Assert.Throws<AppSettingsException>(Action);
+        Assert.Equal("Error getting board ID from configuration.", exception.Message);
+        return;
+
+        // Act
+        void Action() => _ = new CustomFieldOnBoardManager(_configurationMock.Object, _trelloDotNetWrapperMock.Object);
     }
 
     [Fact, Trait("Category", "UnitTests")]

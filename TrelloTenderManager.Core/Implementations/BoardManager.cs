@@ -1,4 +1,5 @@
-﻿using TrelloDotNet.Model;
+﻿using Microsoft.Extensions.Configuration;
+using TrelloDotNet.Model;
 using TrelloTenderManager.Core.Interfaces;
 using TrelloTenderManager.Domain.Enums;
 using TrelloTenderManager.Domain.Exceptions;
@@ -10,7 +11,14 @@ namespace TrelloTenderManager.Core.Implementations;
 /// </summary>
 public class BoardManager : IBoardManager
 {
+    /// <summary>
+    /// The list on board manager.
+    /// </summary>
     private readonly IListOnBoardManager _listOnBoardManager;
+
+    /// <summary>
+    /// The custom field on board manager.
+    /// </summary>
     private readonly ICustomFieldOnBoardManager _customFieldOnBoardManager;
 
     /// <inheritdoc />
@@ -25,13 +33,20 @@ public class BoardManager : IBoardManager
     /// <summary>
     /// Initializes a new instance of the <see cref="BoardManager"/> class.
     /// </summary>
+    /// <param name="configuration">The configuration instance.</param>
     /// <param name="listOnBoardManager">The list on board manager.</param>
     /// <param name="customFieldOnBoardManager">The custom field on board manager.</param>
-    /// <param name="boardId">The ID of the board.</param>
-    public BoardManager(IListOnBoardManager listOnBoardManager, ICustomFieldOnBoardManager customFieldOnBoardManager, string boardId)
+    public BoardManager(IConfiguration configuration, IListOnBoardManager listOnBoardManager, ICustomFieldOnBoardManager customFieldOnBoardManager)
     {
         _listOnBoardManager = listOnBoardManager;
         _customFieldOnBoardManager = customFieldOnBoardManager;
+
+        var boardId = configuration["Trello:BoardId"];
+
+        if (string.IsNullOrWhiteSpace(boardId))
+        {
+            throw new AppSettingsException("Error getting board ID from configuration.");
+        }
 
         BoardId = boardId;
 

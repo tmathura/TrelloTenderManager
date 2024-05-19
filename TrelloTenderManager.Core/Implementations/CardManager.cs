@@ -12,10 +12,11 @@ namespace TrelloTenderManager.Core.Implementations;
 /// <remarks>
 /// Initializes a new instance of the <see cref="CardManager"/> class.
 /// </remarks>
+/// <param name="tenderCsvParser">The TenderCsvParser instance.</param>
 /// <param name="trelloDotNetWrapper">The TrelloDotNetWrapper instance.</param>
 /// <param name="boardManager">The BoardManager instance.</param>
 /// <param name="customFieldManager">The CustomFieldManager instance.</param>
-public class CardManager(ITrelloDotNetWrapper trelloDotNetWrapper, IBoardManager boardManager, ICustomFieldManager customFieldManager) : ICardManager
+public class CardManager(ITenderCsvParser tenderCsvParser, ITrelloDotNetWrapper trelloDotNetWrapper, IBoardManager boardManager, ICustomFieldManager customFieldManager) : ICardManager
 {
     /// <inheritdoc />
     public async Task<Card> Create(Tender tender)
@@ -29,6 +30,37 @@ public class CardManager(ITrelloDotNetWrapper trelloDotNetWrapper, IBoardManager
         await customFieldManager.UpdateCustomFieldsOnCard(tender, cardResult);
 
         return cardResult;
+    }
+
+    /// <inheritdoc />
+    public async Task<ProcessFromCsvResult> ProcessFromCsv(string fileContent)
+    {
+        var processFromCsvResult = new ProcessFromCsvResult();
+
+        var tenders = tenderCsvParser.Parse(fileContent);
+
+        var tenderValidationResult = TenderParser.Validate(tenders);
+
+        var filteredTenders = TenderParser.Filter(tenderValidationResult.ValidTenders);
+
+        foreach (var tender in filteredTenders)
+        {
+            var card = await Exists(tender);
+            if (card is not null)
+            {
+                await Update(card, tender);
+
+                processFromCsvResult.UpdatedCount++;
+            }
+            else
+            {
+                await Create(tender);
+
+                processFromCsvResult.CreatedCount++;
+            }
+        }
+
+        return processFromCsvResult;
     }
 
     /// <inheritdoc />
@@ -50,7 +82,12 @@ public class CardManager(ITrelloDotNetWrapper trelloDotNetWrapper, IBoardManager
 
         if (!string.IsNullOrWhiteSpace(cardDescription))
         {
-            card = await trelloDotNetWrapper.SearchOnCard(boardManager.BoardId, cardDescription);
+            var exists = await trelloDotNetWrapper.SearchOnCardViaBoard(boardManager.BoardId, cardDescription);
+
+            if (exists is not null && !string.IsNullOrWhiteSpace(exists.Id))
+            {
+                card = await trelloDotNetWrapper.GetCard(exists.Id);
+            }
         }
 
         return card;
@@ -70,7 +107,7 @@ public class CardManager(ITrelloDotNetWrapper trelloDotNetWrapper, IBoardManager
 
     private static string GetUniqueId(Tender tender)
     {
-        var tenderIdentification = tender.Id + tender.LotNumber;
+        var tenderIdentification = tender.TenderId + tender.LotNumber;
         var data = MD5.HashData(Encoding.UTF8.GetBytes(tenderIdentification));
 
         return BitConverter.ToString(data).Replace("-", "").ToLower();

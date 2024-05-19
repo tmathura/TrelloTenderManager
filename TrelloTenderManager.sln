@@ -9,6 +9,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrelloTenderManager.Core", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrelloTenderManager.Core.UnitTests", "TrelloTenderManager.Core.UnitTests\TrelloTenderManager.Core.UnitTests.csproj", "{1126BBF0-8D32-490A-9EBE-55B054D1C49E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrelloTenderManager.WebApi", "TrelloTenderManager.WebApi\TrelloTenderManager.WebApi.csproj", "{D734F0E4-9EF3-401B-9C68-CA6E9006A3E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrelloTenderManager.WebApi.IntegrationTests", "TrelloTenderManager.WebApi.IntegrationTests\TrelloTenderManager.WebApi.IntegrationTests.csproj", "{727EB92C-F61C-4416-A264-6E1EC12AE46C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrelloTenderManager.Tests.Common", "TrelloTenderManager.Tests.Common\TrelloTenderManager.Tests.Common.csproj", "{CBB6E4A0-ADBC-4D11-BD7B-B46765E876B9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +33,18 @@ Global
 		{1126BBF0-8D32-490A-9EBE-55B054D1C49E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1126BBF0-8D32-490A-9EBE-55B054D1C49E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1126BBF0-8D32-490A-9EBE-55B054D1C49E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D734F0E4-9EF3-401B-9C68-CA6E9006A3E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D734F0E4-9EF3-401B-9C68-CA6E9006A3E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D734F0E4-9EF3-401B-9C68-CA6E9006A3E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D734F0E4-9EF3-401B-9C68-CA6E9006A3E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{727EB92C-F61C-4416-A264-6E1EC12AE46C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{727EB92C-F61C-4416-A264-6E1EC12AE46C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{727EB92C-F61C-4416-A264-6E1EC12AE46C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{727EB92C-F61C-4416-A264-6E1EC12AE46C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBB6E4A0-ADBC-4D11-BD7B-B46765E876B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBB6E4A0-ADBC-4D11-BD7B-B46765E876B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBB6E4A0-ADBC-4D11-BD7B-B46765E876B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBB6E4A0-ADBC-4D11-BD7B-B46765E876B9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

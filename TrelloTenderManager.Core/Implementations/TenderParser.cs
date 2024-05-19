@@ -5,8 +5,23 @@ namespace TrelloTenderManager.Core.Implementations;
 /// <summary>
 /// Provides methods to validate a list of tenders.
 /// </summary>
-public static class TenderValidator
+public static class TenderParser
 {
+
+    /// <summary>
+    /// Filters a list of tenders to remove duplicates.
+    /// </summary>
+    /// <param name="tenders">The list of tenders to filter.</param>
+    public static List<Tender> Filter(List<Tender> tenders)
+    {
+        var filteredTenders = tenders.GroupBy(t => new { t.TenderId, t.LotNumber })
+            .Select(g => g.Last())
+            .ToList();
+
+        return filteredTenders;
+
+    }
+
     /// <summary>
     /// Validates a list of tenders and returns the validation result.
     /// </summary>

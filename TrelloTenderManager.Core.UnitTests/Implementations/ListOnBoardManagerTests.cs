@@ -1,21 +1,30 @@
+using Microsoft.Extensions.Configuration;
 using Moq;
 using TrelloDotNet.Model;
 using TrelloTenderManager.Core.Implementations;
 using TrelloTenderManager.Core.Interfaces;
 using TrelloTenderManager.Core.UnitTests.Helpers;
 using TrelloTenderManager.Domain.Enums;
+using TrelloTenderManager.Domain.Exceptions;
 
 namespace TrelloTenderManager.Core.UnitTests.Implementations;
 
 public class ListOnBoardManagerTests
 {
+    private const string BoardId = "MyBoard1989";
+
+    private readonly Mock<IConfiguration> _configurationMock;
     private readonly Mock<ITrelloDotNetWrapper> _trelloDotNetWrapperMock;
     private readonly ListOnBoardManager _listOnBoardManager;
 
     public ListOnBoardManagerTests()
     {
+        _configurationMock = new Mock<IConfiguration>();
+        _configurationMock.Setup(c => c["Trello:BoardId"]).Returns(BoardId);
+
         _trelloDotNetWrapperMock = new Mock<ITrelloDotNetWrapper>();
-        _listOnBoardManager = new ListOnBoardManager(_trelloDotNetWrapperMock.Object, It.IsAny<string>());
+
+        _listOnBoardManager = new ListOnBoardManager(_configurationMock.Object, _trelloDotNetWrapperMock.Object);
     }
 
     [Fact, Trait("Category", "UnitTests")]
@@ -124,6 +133,21 @@ public class ListOnBoardManagerTests
 
         // Act
         void Action() => _listOnBoardManager.Setup();
+    }
+
+    [Fact, Trait("Category", "UnitTests")]
+    public void SetUp_Should_Throw_AppSettingsException_When_No_BoardId()
+    {
+        // Arrange
+        _configurationMock.Setup(c => c["Trello:BoardId"]).Returns(string.Empty);
+
+        // Assert
+        var exception = Assert.Throws<AppSettingsException>(Action);
+        Assert.Equal("Error getting board ID from configuration.", exception.Message);
+        return;
+
+        // Act
+        void Action() => _ = new ListOnBoardManager(_configurationMock.Object, _trelloDotNetWrapperMock.Object);
     }
 
     [Fact, Trait("Category", "UnitTests")]

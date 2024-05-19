@@ -5,6 +5,7 @@ using TrelloTenderManager.Core.Interfaces;
 using TrelloTenderManager.Core.UnitTests.Fakers;
 using TrelloTenderManager.Core.UnitTests.Helpers;
 using TrelloTenderManager.Domain.Enums;
+using TrelloTenderManager.Domain.Models;
 
 namespace TrelloTenderManager.Core.UnitTests.Implementations;
 
@@ -19,11 +20,12 @@ public class CardManagerTests
 
     public CardManagerTests()
     {
+        var tenderCsvParserMock = new Mock<ITenderCsvParser>();
         _trelloDotNetWrapperMock = new Mock<ITrelloDotNetWrapper>();
         _boardManagerMock = new Mock<IBoardManager>();
         _customFieldManagerMock = new Mock<ICustomFieldManager>();
 
-        _cardManager = new CardManager(_trelloDotNetWrapperMock.Object, _boardManagerMock.Object, _customFieldManagerMock.Object);
+        _cardManager = new CardManager(tenderCsvParserMock.Object, _trelloDotNetWrapperMock.Object, _boardManagerMock.Object, _customFieldManagerMock.Object);
     }
 
     [Fact, Trait("Category", "UnitTests")]
@@ -79,17 +81,23 @@ public class CardManagerTests
     public async Task Exists_Found()
     {
         // Arrange
-        var tender = _tenderFaker.Generate();
-        var card = new Card("MyId", tender.Name, CardManager.GetCardDescription(tender));
+        const string cardId = "MyCardId19";
 
-        _trelloDotNetWrapperMock.Setup(trelloDotNetWrapper => trelloDotNetWrapper.SearchOnCard(It.IsAny<string>(), CardManager.GetCardDescription(tender))).ReturnsAsync(card);
+        var tender = _tenderFaker.Generate();
+        var card = CardHelper.GenerateCard(tender, cardId);
+
+        var searchViaBoardResult = new SearchViaBoardResult{ Id = cardId, Name = tender.Name, Desc = CardManager.GetCardDescription(tender) };
+
+        _trelloDotNetWrapperMock.Setup(trelloDotNetWrapper => trelloDotNetWrapper.SearchOnCardViaBoard(It.IsAny<string>(), CardManager.GetCardDescription(tender))).ReturnsAsync(searchViaBoardResult);
+        _trelloDotNetWrapperMock.Setup(trelloDotNetWrapper => trelloDotNetWrapper.GetCard(cardId)).ReturnsAsync(card);
 
         // Act
         var result = await _cardManager.Exists(tender);
 
         // Assert
         Assert.NotNull(result);
-        _trelloDotNetWrapperMock.Verify(trelloDotNetWrapper => trelloDotNetWrapper.SearchOnCard(It.IsAny<string>(), CardManager.GetCardDescription(tender)), Times.Once);
+        _trelloDotNetWrapperMock.Verify(trelloDotNetWrapper => trelloDotNetWrapper.SearchOnCardViaBoard(It.IsAny<string>(), CardManager.GetCardDescription(tender)), Times.Once);
+        _trelloDotNetWrapperMock.Verify(trelloDotNetWrapper => trelloDotNetWrapper.GetCard(cardId), Times.Once);
     }
 
     [Fact, Trait("Category", "UnitTests")]
@@ -103,6 +111,7 @@ public class CardManagerTests
 
         // Assert
         Assert.Null(result);
-        _trelloDotNetWrapperMock.Verify(trelloDotNetWrapper => trelloDotNetWrapper.SearchOnCard(It.IsAny<string>(), CardManager.GetCardDescription(tender)), Times.Once);
+        _trelloDotNetWrapperMock.Verify(trelloDotNetWrapper => trelloDotNetWrapper.SearchOnCardViaBoard(It.IsAny<string>(), CardManager.GetCardDescription(tender)), Times.Once);
+        _trelloDotNetWrapperMock.Verify(trelloDotNetWrapper => trelloDotNetWrapper.GetCard(It.IsAny<string>()), Times.Never);
     }
 }

@@ -4,7 +4,7 @@ using TrelloTenderManager.Domain.Models;
 
 namespace TrelloTenderManager.Core.UnitTests.Implementations;
 
-public class TenderValidatorTests
+public class TenderParserTests
 {
     private readonly Faker _faker = new();
 
@@ -20,7 +20,7 @@ public class TenderValidatorTests
         };
 
         // Act
-        var result = TenderValidator.Validate(tenders);
+        var result = TenderParser.Validate(tenders);
 
         // Assert
         Assert.Equal(tenders.Count, result.ValidTenders.Count);
@@ -41,7 +41,7 @@ public class TenderValidatorTests
         };
 
         // Act
-        var result = TenderValidator.Validate(tenders);
+        var result = TenderParser.Validate(tenders);
 
         // Assert
         Assert.Empty(result.ValidTenders);
@@ -71,10 +71,48 @@ public class TenderValidatorTests
         tenders.AddRange(invalidTenders);
 
         // Act
-        var result = TenderValidator.Validate(tenders);
+        var result = TenderParser.Validate(tenders);
 
         // Assert
         Assert.Equal(tenders.Count - invalidTenders.Count, result.ValidTenders.Count);
         Assert.Equal(invalidTenders.Count, result.InvalidTenders.Count);
+    }
+
+    [Fact, Trait("Category", "UnitTests")]
+    public void Filter_AllTheSameTenders()
+    {
+        // Arrange
+        var tender = new Tender { Id = _faker.Random.Guid(), TenderId = _faker.Random.Guid(), Name = _faker.Company.CompanyName(), TenderName = _faker.Random.Words(3) };
+        var tenders = new List<Tender>
+        {
+            tender,
+            tender,
+            tender
+        };
+
+        // Act
+        var filteredTenders = TenderParser.Filter(tenders);
+
+        // Assert
+        Assert.Single(filteredTenders);
+    }
+
+    [Fact, Trait("Category", "UnitTests")]
+    public void Filter_MultipleDifferentTenders()
+    {
+        // Arrange
+        var tender = new Tender { Id = _faker.Random.Guid(), TenderId = _faker.Random.Guid(), Name = _faker.Company.CompanyName(), TenderName = _faker.Random.Words(3) };
+        var tenders = new List<Tender>
+        {
+            tender,
+            new() { Id = _faker.Random.Guid(), TenderId = _faker.Random.Guid(), Name = _faker.Company.CompanyName(), TenderName = _faker.Random.Words(3) },
+            tender
+        };
+
+        // Act
+        var filteredTenders = TenderParser.Filter(tenders);
+
+        // Assert
+        Assert.Equal(2, filteredTenders.Count);
     }
 }

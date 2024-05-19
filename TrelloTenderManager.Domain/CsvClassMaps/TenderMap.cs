@@ -5,8 +5,14 @@ using TrelloTenderManager.Domain.Models;
 
 namespace TrelloTenderManager.Domain.CsvClassMaps;
 
+/// <summary>
+/// Represents the mapping configuration for the Tender class.
+/// </summary>
 public sealed class TenderMap : ClassMap<Tender>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="TenderMap"/> class.
+    /// </summary>
     public TenderMap()
     {
         Map(tender => tender.Id).TypeConverter<CustomGuidConverter>();

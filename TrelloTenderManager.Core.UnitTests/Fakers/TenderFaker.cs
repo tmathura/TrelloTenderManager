@@ -4,8 +4,14 @@ using TrelloTenderManager.Domain.Models;
 
 namespace TrelloTenderManager.Core.UnitTests.Fakers;
 
+/// <summary>
+/// Represents a faker class for generating fake instances of the Tender class.
+/// </summary>
 public sealed class TenderFaker : Faker<Tender>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="TenderFaker"/> class.
+    /// </summary>
     public TenderFaker()
     {
         RuleFor(tender => tender.Id, f => f.Random.Guid());

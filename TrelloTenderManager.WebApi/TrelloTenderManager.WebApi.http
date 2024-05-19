@@ -1,0 +1,6 @@
+@TrelloTenderManager.WebApi_HostAddress = http://localhost:5076
+
+post {{TrelloTenderManager.WebApi_HostAddress}}/api/card/process-from-csv
+Accept: application/json
+
+###

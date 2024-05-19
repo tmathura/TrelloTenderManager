@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Configuration;
 using Moq;
 using TrelloDotNet.Model;
 using TrelloTenderManager.Core.Implementations;
@@ -11,16 +12,22 @@ namespace TrelloTenderManager.Core.UnitTests.Implementations;
 
 public class BoardManagerTests
 {
+    private const string BoardId = "MyBoard1989";
+
+    private readonly Mock<IConfiguration> _configurationMock;
     private readonly Mock<IListOnBoardManager> _listOnBoardManagerMock;
     private readonly Mock<ICustomFieldOnBoardManager> _customFieldOnBoardManagerMock;
     private readonly BoardManager _boardManager;
 
     public BoardManagerTests()
     {
+        _configurationMock = new Mock<IConfiguration>();
+        _configurationMock.Setup(c => c["Trello:BoardId"]).Returns(BoardId);
+
         _listOnBoardManagerMock = new Mock<IListOnBoardManager>();
         _customFieldOnBoardManagerMock = new Mock<ICustomFieldOnBoardManager>();
 
-        _boardManager = new BoardManager(_listOnBoardManagerMock.Object, _customFieldOnBoardManagerMock.Object, It.IsAny<string>());
+        _boardManager = new BoardManager(_configurationMock.Object, _listOnBoardManagerMock.Object, _customFieldOnBoardManagerMock.Object);
     }
 
     [Fact, Trait("Category", "UnitTests")]
@@ -73,15 +80,29 @@ public class BoardManagerTests
     public void SetUp_Should_Throw_BoardSetupException_When_Setup_Fails()
     {
         // Arrange
-        const string boardId = "MyBoard1989";
         _listOnBoardManagerMock.Setup(m => m.Setup()).Throws(new Exception());
         
         // Assert
         var exception = Assert.Throws<BoardSetupException>(Action);
-        Assert.Equal($"Error setting up board: {boardId}", exception.Message);
+        Assert.Equal($"Error setting up board: {BoardId}", exception.Message);
         return;
 
         // Act
-        void Action() => _ = new BoardManager(_listOnBoardManagerMock.Object, _customFieldOnBoardManagerMock.Object, boardId);
+        void Action() => _ = new BoardManager(_configurationMock.Object, _listOnBoardManagerMock.Object, _customFieldOnBoardManagerMock.Object);
+    }
+
+    [Fact, Trait("Category", "UnitTests")]
+    public void SetUp_Should_Throw_AppSettingsException_When_No_BoardId()
+    {
+        // Arrange
+        _configurationMock.Setup(c => c["Trello:BoardId"]).Returns(string.Empty);
+
+        // Assert
+        var exception = Assert.Throws<AppSettingsException>(Action);
+        Assert.Equal("Error getting board ID from configuration.", exception.Message);
+        return;
+
+        // Act
+        void Action() => _ = new BoardManager(_configurationMock.Object, _listOnBoardManagerMock.Object, _customFieldOnBoardManagerMock.Object);
     }
 }

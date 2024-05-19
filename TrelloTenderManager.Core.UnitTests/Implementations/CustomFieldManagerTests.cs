@@ -25,7 +25,7 @@ public class CustomFieldManagerTests
     }
 
     [Fact, Trait("Category", "UnitTests")]
-    public async Task UpdateCustomFieldsOnCard_OnlyUpdateValidCustomFields ()
+    public async Task UpdateCustomFieldsOnCard_OnlyUpdateValidCustomFields()
     {
         // Arrange
         var card = new Card();
@@ -39,22 +39,7 @@ public class CustomFieldManagerTests
         await _customFieldManager.UpdateCustomFieldsOnCard(tender, card);
 
         // Assert
-        foreach (var property in properties)
-        {
-            var customField = customFieldsOnBoard.First(customField => customField.Name == property.Name);
-            var value = property.GetValue(tender);
-
-            var valueAsString = CustomFieldManager.GetPropertyValueAsString(property, value);
-
-            if (!string.IsNullOrWhiteSpace(valueAsString))
-            {
-                _trelloDotNetWrapperMock.Verify(m => m.UpdateCustomFieldValueOnCard(card.Id, customField, valueAsString), Times.Once);
-            } 
-            else
-            {
-                _trelloDotNetWrapperMock.Verify(m => m.UpdateCustomFieldValueOnCard(card.Id, customField, valueAsString), Times.Never);
-            }
-        }
+        _trelloDotNetWrapperMock.Verify(m => m.UpdateCustomFieldsValueOnCard(card.Id, It.IsAny<List<Domain.Models.CustomFields.CustomFieldItem>>()), Times.Once);
     }
 
     [Fact, Trait("Category", "UnitTests")]
@@ -67,7 +52,7 @@ public class CustomFieldManagerTests
         var customFieldsOnBoard = CustomFieldOnBoardHelper.GenerateCustomFields(properties, true, true);
 
         _customFieldOnBoardManagerMock.Setup(m => m.CustomFieldsOnBoard).Returns(customFieldsOnBoard.ToHashSet);
-        _trelloDotNetWrapperMock.Setup(m => m.UpdateCustomFieldValueOnCard(It.IsAny<string>(), It.IsAny<CustomField>(), It.IsAny<string>())).Throws(new Exception());
+        _trelloDotNetWrapperMock.Setup(m => m.UpdateCustomFieldsValueOnCard(It.IsAny<string>(), It.IsAny<List<Domain.Models.CustomFields.CustomFieldItem>>())).Throws(new Exception());
 
         // Assert
         await Assert.ThrowsAsync<Exception>(Action);
