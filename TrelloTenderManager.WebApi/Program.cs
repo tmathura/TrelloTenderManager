@@ -1,6 +1,8 @@
 using System.Reflection;
 using TrelloTenderManager.Core.Implementations;
 using TrelloTenderManager.Core.Interfaces;
+using TrelloTenderManager.Infrastructure.Implementations;
+using TrelloTenderManager.Infrastructure.Interfaces;
 using TrelloTenderManager.WebApi.Filters;
 
 namespace TrelloTenderManager.WebApi;
@@ -19,6 +21,8 @@ public class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
+        builder.Services.AddSingleton<ICsvQueueDal, CsvQueueDal>();
+        builder.Services.AddSingleton<ICsvQueueBl, CsvQueueBl>();
         builder.Services.AddSingleton<ICsvHelperWrapper, CsvHelperWrapper>();
         builder.Services.AddSingleton<ITenderCsvParser, TenderCsvParser>();
         builder.Services.AddSingleton<ITrelloDotNetWrapper, TrelloDotNetWrapper>();
@@ -41,6 +45,7 @@ public class Program
 
         var app = builder.Build();
 
+        app.Services.GetRequiredService<ICsvQueueDal>();
         app.Services.GetRequiredService<IBoardManager>();
 
         if (app.Environment.IsDevelopment())

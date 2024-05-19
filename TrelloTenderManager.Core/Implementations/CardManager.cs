@@ -12,11 +12,12 @@ namespace TrelloTenderManager.Core.Implementations;
 /// <remarks>
 /// Initializes a new instance of the <see cref="CardManager"/> class.
 /// </remarks>
+/// <param name="csvQueueBl">The CsvQueueBl instance.</param>
 /// <param name="tenderCsvParser">The TenderCsvParser instance.</param>
 /// <param name="trelloDotNetWrapper">The TrelloDotNetWrapper instance.</param>
 /// <param name="boardManager">The BoardManager instance.</param>
 /// <param name="customFieldManager">The CustomFieldManager instance.</param>
-public class CardManager(ITenderCsvParser tenderCsvParser, ITrelloDotNetWrapper trelloDotNetWrapper, IBoardManager boardManager, ICustomFieldManager customFieldManager) : ICardManager
+public class CardManager(ICsvQueueBl csvQueueBl, ITenderCsvParser tenderCsvParser, ITrelloDotNetWrapper trelloDotNetWrapper, IBoardManager boardManager, ICustomFieldManager customFieldManager) : ICardManager
 {
     /// <inheritdoc />
     public async Task<Card> Create(Tender tender)
@@ -30,6 +31,12 @@ public class CardManager(ITenderCsvParser tenderCsvParser, ITrelloDotNetWrapper 
         await customFieldManager.UpdateCustomFieldsOnCard(tender, cardResult);
 
         return cardResult;
+    }
+
+    /// <inheritdoc />
+    public async Task QueueFromCsv(string fileContent)
+    {
+        await csvQueueBl.CreateCsvQueue(fileContent);
     }
 
     /// <inheritdoc />

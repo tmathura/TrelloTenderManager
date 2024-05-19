@@ -13,6 +13,12 @@ public interface ICardManager
     Task<Card> Create(Tender tender);
 
     /// <summary>
+    /// Queues the content of a CSV file for processing.
+    /// </summary>
+    /// <param name="fileContent">The content of the CSV file.</param>
+    Task QueueFromCsv(string fileContent);
+
+    /// <summary>
     /// Populates Trello cards from the content of a CSV file.
     /// </summary>
     /// <param name="fileContent">The content of the CSV file.</param>
