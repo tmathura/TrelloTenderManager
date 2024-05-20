@@ -4,6 +4,7 @@ using TrelloTenderManager.Core.Interfaces;
 using TrelloTenderManager.Infrastructure.Implementations;
 using TrelloTenderManager.Infrastructure.Interfaces;
 using TrelloTenderManager.WebApi.Filters;
+using TrelloTenderManager.WebApi.Services;
 
 namespace TrelloTenderManager.WebApi;
 
@@ -31,6 +32,8 @@ public class Program
         builder.Services.AddSingleton<ICustomFieldManager, CustomFieldManager>();
         builder.Services.AddSingleton<IBoardManager, BoardManager>();
         builder.Services.AddSingleton<ICardManager, CardManager>();
+
+        builder.Services.AddHostedService<QueueService>();
 
         builder.Services.AddControllers(options =>
         {

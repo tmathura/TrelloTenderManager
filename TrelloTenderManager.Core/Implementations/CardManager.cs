@@ -1,4 +1,6 @@
-﻿using System.Security.Cryptography;
+﻿using log4net;
+using System.Diagnostics;
+using System.Security.Cryptography;
 using System.Text;
 using TrelloDotNet.Model;
 using TrelloTenderManager.Core.Interfaces;
@@ -12,13 +14,14 @@ namespace TrelloTenderManager.Core.Implementations;
 /// <remarks>
 /// Initializes a new instance of the <see cref="CardManager"/> class.
 /// </remarks>
-/// <param name="csvQueueBl">The CsvQueueBl instance.</param>
 /// <param name="tenderCsvParser">The TenderCsvParser instance.</param>
 /// <param name="trelloDotNetWrapper">The TrelloDotNetWrapper instance.</param>
 /// <param name="boardManager">The BoardManager instance.</param>
 /// <param name="customFieldManager">The CustomFieldManager instance.</param>
-public class CardManager(ICsvQueueBl csvQueueBl, ITenderCsvParser tenderCsvParser, ITrelloDotNetWrapper trelloDotNetWrapper, IBoardManager boardManager, ICustomFieldManager customFieldManager) : ICardManager
+public class CardManager(ITenderCsvParser tenderCsvParser, ITrelloDotNetWrapper trelloDotNetWrapper, IBoardManager boardManager, ICustomFieldManager customFieldManager) : ICardManager
 {
+    private readonly ILog _logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod()?.DeclaringType);
+
     /// <inheritdoc />
     public async Task<Card> Create(Tender tender)
     {
@@ -34,12 +37,6 @@ public class CardManager(ICsvQueueBl csvQueueBl, ITenderCsvParser tenderCsvParse
     }
 
     /// <inheritdoc />
-    public async Task QueueFromCsv(string fileContent)
-    {
-        await csvQueueBl.CreateCsvQueue(fileContent);
-    }
-
-    /// <inheritdoc />
     public async Task<ProcessFromCsvResult> ProcessFromCsv(string fileContent)
     {
         var processFromCsvResult = new ProcessFromCsvResult();
@@ -50,8 +47,15 @@ public class CardManager(ICsvQueueBl csvQueueBl, ITenderCsvParser tenderCsvParse
 
         var filteredTenders = TenderParser.Filter(tenderValidationResult.ValidTenders);
 
+        var count = 0;
+
+        var stopwatch = new Stopwatch();
+        stopwatch.Start();
+
         foreach (var tender in filteredTenders)
         {
+            count++;
+
             var card = await Exists(tender);
             if (card is not null)
             {
@@ -65,6 +69,15 @@ public class CardManager(ICsvQueueBl csvQueueBl, ITenderCsvParser tenderCsvParse
 
                 processFromCsvResult.CreatedCount++;
             }
+
+            _logger.Info($"Processed tender {count} of {filteredTenders.Count}.");
+        }
+
+        stopwatch.Stop();
+
+        if (count > 0)
+        {
+            _logger.Info($"Processed {count} tenders in {stopwatch.Elapsed.Hours} hours, {stopwatch.Elapsed.Minutes} minutes, {stopwatch.Elapsed.Seconds} seconds, and {stopwatch.Elapsed.Milliseconds} milliseconds.");
         }
 
         return processFromCsvResult;

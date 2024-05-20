@@ -14,29 +14,7 @@ namespace TrelloTenderManager.WebApi.Controllers;
 public class CardController(ICardManager cardManager) : ControllerBase
 {
     private readonly ILog _logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod()?.DeclaringType);
-
-    /// <summary>
-    /// Queues the CSV data.
-    /// </summary>
-    /// <param name="processFromCsvRequest">The request containing the CSV file content.</param>
-    [HttpPost]
-    [Route("queue-from-csv")]
-    public async Task QueueFromCsv(ProcessFromCsvRequest processFromCsvRequest)
-    {
-        try
-        {
-            _logger.Info($"Starting to process queue csv data: {JsonSerializer.Serialize(processFromCsvRequest.FileContent)}.");
-
-            await cardManager.QueueFromCsv(processFromCsvRequest.FileContent ?? string.Empty);
-
-            _logger.Info("Csv data queued successfully.");
-        }
-        catch (Exception exception)
-        {
-            throw new HttpResponseException((int)HttpStatusCode.InternalServerError, exception.Message);
-        }
-    }
-
+    
     /// <summary>
     /// Processes the CSV data.
     /// </summary>
@@ -50,7 +28,7 @@ public class CardController(ICardManager cardManager) : ControllerBase
         {
             _logger.Info($"Starting to process csv data: {JsonSerializer.Serialize(processFromCsvRequest.FileContent)}.");
 
-            var processFromCsv = await cardManager.ProcessFromCsv(processFromCsvRequest.FileContent ?? string.Empty);
+            var processFromCsv = await cardManager.ProcessFromCsv(processFromCsvRequest.FileContent);
 
             _logger.Info($"Csv data processed with result: {JsonSerializer.Serialize(processFromCsv)}.");
 

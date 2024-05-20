@@ -20,13 +20,12 @@ public class CardManagerTests
 
     public CardManagerTests()
     {
-        var csvQueueBlMock = new Mock<ICsvQueueBl>();
         var tenderCsvParserMock = new Mock<ITenderCsvParser>();
         _trelloDotNetWrapperMock = new Mock<ITrelloDotNetWrapper>();
         _boardManagerMock = new Mock<IBoardManager>();
         _customFieldManagerMock = new Mock<ICustomFieldManager>();
 
-        _cardManager = new CardManager(csvQueueBlMock.Object, tenderCsvParserMock.Object, _trelloDotNetWrapperMock.Object, _boardManagerMock.Object, _customFieldManagerMock.Object);
+        _cardManager = new CardManager(tenderCsvParserMock.Object, _trelloDotNetWrapperMock.Object, _boardManagerMock.Object, _customFieldManagerMock.Object);
     }
 
     [Fact, Trait("Category", "UnitTests")]

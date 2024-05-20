@@ -1,7 +1,6 @@
 ﻿using log4net;
 using Microsoft.Extensions.Configuration;
 using SQLite;
-using System.Data.Common;
 using System.Linq.Expressions;
 using TrelloTenderManager.Domain.DataAccessObjects;
 using TrelloTenderManager.Domain.Exceptions;
@@ -47,18 +46,14 @@ public class CsvQueueDal : ICsvQueueDal
             throw;
         }
     }
-
+    
     /// <inheritdoc />
     public async Task<int> CreateCsvQueue(CsvQueueDao user)
     {
         try
         {
-            _logger.Info("Start create insert of the CsvQueueDao into the database.");
-
             await _database.InsertAsync(user);
-
-            _logger.Info("Completed create insert of CsvQueueDao into the database.");
-
+            
             return user.Id;
         }
         catch (Exception exception)
@@ -69,12 +64,10 @@ public class CsvQueueDal : ICsvQueueDal
     }
 
     /// <inheritdoc />
-    public async Task<List<CsvQueueDao>?> Read(Expression<Func<CsvQueueDao, bool>>? expression = null)
+    public async Task<List<CsvQueueDao>?> ReadCsvQueue(Expression<Func<CsvQueueDao, bool>>? expression = null)
     {
         try
         {
-            _logger.Info("Starting read of the CsvQueueDao from the database.");
-
             var csvQueueDaoTable = _database.Table<CsvQueueDao>();
             if (expression != null)
             {
@@ -82,9 +75,7 @@ public class CsvQueueDal : ICsvQueueDal
             }
 
             var csvQueueDaos = await csvQueueDaoTable.ToListAsync();
-
-            _logger.Info("Completed read of the CsvQueueDao from the database.");
-
+            
             return csvQueueDaos;
         }
         catch (Exception exception)
@@ -93,38 +84,14 @@ public class CsvQueueDal : ICsvQueueDal
             throw;
         }
     }
-
-    /// <inheritdoc />
-    public async Task<CsvQueueDao?> ReadFirstUnprocessedCsvQueue()
-    {
-        try
-        {
-            _logger.Info("Starting read of the first unprocessed CsvQueueDao from the database.");
-
-            var csvQueueDao = await _database.Table<CsvQueueDao>().Where(queueDao => !queueDao.IsProcessed).FirstOrDefaultAsync();
-
-            _logger.Info("Completed read of the first unprocessed CsvQueueDao from the database completed.");
-
-            return csvQueueDao;
-        }
-        catch (Exception exception)
-        {
-            _logger.Error($"{exception.Message} - {exception.StackTrace}");
-            throw;
-        }
-    }
-
+    
     /// <inheritdoc />
     public async Task<int> UpdateCsvQueue(CsvQueueDao csvQueueDao)
     {
         try
         {
-            _logger.Info("Start update insert of the CsvQueueDao into the database.");
-
             var result = await _database.UpdateAsync(csvQueueDao);
-
-            _logger.Info("Completed update insert of CsvQueueDao into the database.");
-
+            
             return result;
         }
         catch (Exception exception)

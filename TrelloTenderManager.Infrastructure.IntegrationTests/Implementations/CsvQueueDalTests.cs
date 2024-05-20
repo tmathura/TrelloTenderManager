@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Configuration;
 using Moq;
 using TrelloTenderManager.Domain.DataAccessObjects;
+using TrelloTenderManager.Domain.Enums;
 using TrelloTenderManager.Domain.Exceptions;
 using TrelloTenderManager.Infrastructure.Implementations;
 
@@ -29,7 +30,6 @@ namespace TrelloTenderManager.Infrastructure.IntegrationTests.Implementations
             var csvQueueDao = new CsvQueueDao
             {
                 CsvContent = csvContent,
-                IsProcessed = false
             };
 
             // Act
@@ -38,7 +38,7 @@ namespace TrelloTenderManager.Infrastructure.IntegrationTests.Implementations
             // Assert
             Assert.True(csvQueueId > 0);
 
-            var readCsvQueueDaos = await _csvQueueDal.Read();
+            var readCsvQueueDaos = await _csvQueueDal.ReadCsvQueue();
 
             Assert.NotNull(readCsvQueueDaos);
             Assert.Single(readCsvQueueDaos);
@@ -47,7 +47,7 @@ namespace TrelloTenderManager.Infrastructure.IntegrationTests.Implementations
 
             Assert.NotNull(readCsvQueueDao);
             Assert.Equal(csvContent, readCsvQueueDao.CsvContent);
-            Assert.False(readCsvQueueDao.IsProcessed);
+            Assert.Equal(readCsvQueueDao.Status, QueueStatus.Unprocessed);
         }
 
         [Fact, Trait("Category", "IntegrationTests")]
@@ -58,14 +58,14 @@ namespace TrelloTenderManager.Infrastructure.IntegrationTests.Implementations
             var csvQueueDao = new CsvQueueDao
             {
                 CsvContent = csvContent,
-                IsProcessed = false
+                Status = QueueStatus.Unprocessed
             };
 
             await _csvQueueDal.CreateCsvQueue(csvQueueDao);
             await _csvQueueDal.CreateCsvQueue(csvQueueDao);
             
             // Act
-            var readCsvQueueDaos = await _csvQueueDal.Read();
+            var readCsvQueueDaos = await _csvQueueDal.ReadCsvQueue();
 
             Assert.NotNull(readCsvQueueDaos);
             Assert.Equal(2, readCsvQueueDaos.Count);
@@ -79,7 +79,7 @@ namespace TrelloTenderManager.Infrastructure.IntegrationTests.Implementations
             var csvQueueDao = new CsvQueueDao
             {
                 CsvContent = csvContent,
-                IsProcessed = false
+                Status = QueueStatus.Unprocessed
             };
 
             var csvQueueId = await _csvQueueDal.CreateCsvQueue(csvQueueDao);
@@ -92,7 +92,7 @@ namespace TrelloTenderManager.Infrastructure.IntegrationTests.Implementations
             Assert.Equal(1, updatedRows);
 
             // Update Assert
-            var readCsvQueueDaos = await _csvQueueDal.Read(expression => expression.Id == csvQueueId);
+            var readCsvQueueDaos = await _csvQueueDal.ReadCsvQueue(expression => expression.Id == csvQueueId);
             Assert.NotNull(readCsvQueueDaos);
             Assert.Single(readCsvQueueDaos);
 
@@ -101,37 +101,6 @@ namespace TrelloTenderManager.Infrastructure.IntegrationTests.Implementations
             Assert.NotNull(readCsvQueueDao);
             Assert.Equal(csvQueueId, readCsvQueueDao.Id);
             Assert.Equal(csvContent, readCsvQueueDao.CsvContent);
-        }
-
-        [Fact, Trait("Category", "IntegrationTests")]
-        public async Task CsvQueue_ReadFirstUnprocessedCsvQueue()
-        {
-            // Create Arrange
-            const string firstCsvContent = "First test content";
-            var firstCsvQueueDao = new CsvQueueDao
-            {
-                CsvContent = firstCsvContent,
-                IsProcessed = false
-            };
-
-            var csvQueueId = await _csvQueueDal.CreateCsvQueue(firstCsvQueueDao);
-
-            var secondCsvQueueDao = new CsvQueueDao
-            {
-                CsvContent = "Second test content",
-                IsProcessed = false
-            };
-
-            await _csvQueueDal.CreateCsvQueue(secondCsvQueueDao);
-
-            // Act
-            var readCsvQueueDao = await _csvQueueDal.ReadFirstUnprocessedCsvQueue();
-
-            // Assert
-            Assert.NotNull(readCsvQueueDao);
-            Assert.Equal(csvQueueId, readCsvQueueDao.Id);
-            Assert.Equal(firstCsvContent, readCsvQueueDao.CsvContent);
-            Assert.False(readCsvQueueDao.IsProcessed);
         }
 
         [Fact, Trait("Category", "IntegrationTests")]

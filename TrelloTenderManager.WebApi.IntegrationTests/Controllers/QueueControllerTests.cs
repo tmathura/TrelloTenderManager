@@ -26,8 +26,7 @@ public class QueueControllerTests : IClassFixture<CommonHelper>
         {
             var database = new SQLiteAsyncConnection(databasePath);
 
-            database.DropTableAsync<CsvQueueDao>().Wait();
-            database.CreateTableAsync<CsvQueueDao>().Wait();
+            database.DeleteAllAsync<CsvQueueDao>().Wait();
         }
     }
 
@@ -35,14 +34,54 @@ public class QueueControllerTests : IClassFixture<CommonHelper>
     public async Task QueueFromCsv()
     {
         // Arrange
+        var filename = TestDataHelper.GetSampleFilename(1);
         var fileContent = TestDataHelper.GetSampleFileFileContent(1);
-        var processFromCsvRequest = new
+        var queueFromCsvRequest = new
         {
+            filename,
             fileContent
         };
 
-        await _commonHelper.CallEndPoint("api/card/queue-from-csv", null, Method.Post, processFromCsvRequest);
-        await _commonHelper.CallEndPoint("api/card/queue-from-csv", null, Method.Post, processFromCsvRequest);
+        // Act
+        var response = await _commonHelper.CallEndPoint("api/queue/queue-from-csv", null, Method.Post, queueFromCsvRequest);
+
+        // Assert
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+    }
+
+    [Fact, Trait("Category", "IntegrationTests")]
+    public async Task QueueFromCsv_BigFile()
+    {
+        // Arrange
+        var filename = TestDataHelper.GetSampleFilename(3);
+        var fileContent = TestDataHelper.GetSampleFileFileContent(3);
+        var queueFromCsvRequest = new
+        {
+            filename,
+            fileContent
+        };
+
+        // Act
+        var response = await _commonHelper.CallEndPoint("api/queue/queue-from-csv", null, Method.Post, queueFromCsvRequest);
+
+        // Assert
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+    }
+
+    [Fact, Trait("Category", "IntegrationTests")]
+    public async Task Get()
+    {
+        // Arrange
+        var filename = TestDataHelper.GetSampleFilename(1);
+        var fileContent = TestDataHelper.GetSampleFileFileContent(1);
+        var queueFromCsvRequest = new
+        {
+            filename,
+            fileContent
+        };
+
+        await _commonHelper.CallEndPoint("api/queue/queue-from-csv", null, Method.Post, queueFromCsvRequest);
+        await _commonHelper.CallEndPoint("api/queue/queue-from-csv", null, Method.Post, queueFromCsvRequest);
 
         // Act
         var response = await _commonHelper.CallEndPoint("api/queue", null, Method.Get, null);

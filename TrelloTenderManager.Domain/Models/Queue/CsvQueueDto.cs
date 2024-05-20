@@ -1,4 +1,6 @@
-﻿namespace TrelloTenderManager.Domain.Models.Queue;
+﻿using TrelloTenderManager.Domain.Enums;
+
+namespace TrelloTenderManager.Domain.Models.Queue;
 
 /// <summary>
 /// Represents a data access object for CSV queue.
@@ -11,17 +13,17 @@ public class CsvQueueDto
     public int Id { get; set; }
 
     /// <summary>
-    /// Gets or sets the content of the CSV.
+    /// Gets or sets the filename of the CSV.
     /// </summary>
-    public string? CsvContent { get; set; }
+    public string? Filename { get; set; }
+    
+    /// <summary>
+    /// Gets or sets the status of the CSV queue.
+    /// </summary>
+    public QueueStatus Status { get; set; }
 
     /// <summary>
-    /// Gets or sets a value indicating whether the CSV has been processed.
+    /// Gets or sets the reason for the failure of the CSV processing.
     /// </summary>
-    public bool IsProcessed { get; set; }
-
-    /// <summary>
-    /// Gets or sets a value indicating whether the CSV processing failed.
-    /// </summary>
-    public bool FailedProcess { get; set; }
+    public string? FailedReason { get; set; }
 }
