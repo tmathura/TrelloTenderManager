@@ -27,13 +27,13 @@ public class CsvQueueBl(ICsvQueueDal csvQueueDal, ICardManager cardManager) : IC
             UpdatedAt = DateTime.Now
         };
 
-        return await csvQueueDal.CreateCsvQueue(csvQueue);
+        return await csvQueueDal.Create(csvQueue);
     }
 
     /// <inheritdoc />
     public async Task<List<CsvQueueDao>?> ReadCsvQueue(Expression<Func<CsvQueueDao, bool>>? expression = null)
     {
-        return await csvQueueDal.ReadCsvQueue(expression);
+        return await csvQueueDal.Read(expression);
     }
     
     /// <inheritdoc />
@@ -41,7 +41,7 @@ public class CsvQueueBl(ICsvQueueDal csvQueueDal, ICardManager cardManager) : IC
     {
         csvQueue.UpdatedAt = DateTime.Now;
 
-        return await csvQueueDal.UpdateCsvQueue(csvQueue);
+        return await csvQueueDal.Update(csvQueue);
     }
 
     /// <inheritdoc />

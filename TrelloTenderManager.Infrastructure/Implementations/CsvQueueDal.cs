@@ -48,7 +48,7 @@ public class CsvQueueDal : ICsvQueueDal
     }
     
     /// <inheritdoc />
-    public async Task<int> CreateCsvQueue(CsvQueueDao user)
+    public async Task<int> Create(CsvQueueDao user)
     {
         try
         {
@@ -64,7 +64,7 @@ public class CsvQueueDal : ICsvQueueDal
     }
 
     /// <inheritdoc />
-    public async Task<List<CsvQueueDao>?> ReadCsvQueue(Expression<Func<CsvQueueDao, bool>>? expression = null)
+    public async Task<List<CsvQueueDao>?> Read(Expression<Func<CsvQueueDao, bool>>? expression = null)
     {
         try
         {
@@ -86,7 +86,7 @@ public class CsvQueueDal : ICsvQueueDal
     }
     
     /// <inheritdoc />
-    public async Task<int> UpdateCsvQueue(CsvQueueDao csvQueueDao)
+    public async Task<int> Update(CsvQueueDao csvQueueDao)
     {
         try
         {

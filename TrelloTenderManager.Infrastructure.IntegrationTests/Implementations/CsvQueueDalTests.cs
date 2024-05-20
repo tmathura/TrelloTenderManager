@@ -33,12 +33,12 @@ namespace TrelloTenderManager.Infrastructure.IntegrationTests.Implementations
             };
 
             // Act
-            var csvQueueId = await _csvQueueDal.CreateCsvQueue(csvQueueDao);
+            var csvQueueId = await _csvQueueDal.Create(csvQueueDao);
 
             // Assert
             Assert.True(csvQueueId > 0);
 
-            var readCsvQueueDaos = await _csvQueueDal.ReadCsvQueue();
+            var readCsvQueueDaos = await _csvQueueDal.Read();
 
             Assert.NotNull(readCsvQueueDaos);
             Assert.Single(readCsvQueueDaos);
@@ -47,7 +47,7 @@ namespace TrelloTenderManager.Infrastructure.IntegrationTests.Implementations
 
             Assert.NotNull(readCsvQueueDao);
             Assert.Equal(csvContent, readCsvQueueDao.CsvContent);
-            Assert.Equal(readCsvQueueDao.Status, QueueStatus.Unprocessed);
+            Assert.Equal(QueueStatus.Unprocessed, readCsvQueueDao.Status);
         }
 
         [Fact, Trait("Category", "IntegrationTests")]
@@ -61,11 +61,11 @@ namespace TrelloTenderManager.Infrastructure.IntegrationTests.Implementations
                 Status = QueueStatus.Unprocessed
             };
 
-            await _csvQueueDal.CreateCsvQueue(csvQueueDao);
-            await _csvQueueDal.CreateCsvQueue(csvQueueDao);
+            await _csvQueueDal.Create(csvQueueDao);
+            await _csvQueueDal.Create(csvQueueDao);
             
             // Act
-            var readCsvQueueDaos = await _csvQueueDal.ReadCsvQueue();
+            var readCsvQueueDaos = await _csvQueueDal.Read();
 
             Assert.NotNull(readCsvQueueDaos);
             Assert.Equal(2, readCsvQueueDaos.Count);
@@ -82,17 +82,17 @@ namespace TrelloTenderManager.Infrastructure.IntegrationTests.Implementations
                 Status = QueueStatus.Unprocessed
             };
 
-            var csvQueueId = await _csvQueueDal.CreateCsvQueue(csvQueueDao);
+            var csvQueueId = await _csvQueueDal.Create(csvQueueDao);
             
             csvContent = "Test content updated";
             csvQueueDao.CsvContent = csvContent;
 
             // Act
-            var updatedRows = await _csvQueueDal.UpdateCsvQueue(csvQueueDao);
+            var updatedRows = await _csvQueueDal.Update(csvQueueDao);
             Assert.Equal(1, updatedRows);
 
             // Update Assert
-            var readCsvQueueDaos = await _csvQueueDal.ReadCsvQueue(expression => expression.Id == csvQueueId);
+            var readCsvQueueDaos = await _csvQueueDal.Read(expression => expression.Id == csvQueueId);
             Assert.NotNull(readCsvQueueDaos);
             Assert.Single(readCsvQueueDaos);
 
