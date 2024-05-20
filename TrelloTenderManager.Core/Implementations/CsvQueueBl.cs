@@ -1,4 +1,5 @@
-﻿using TrelloTenderManager.Core.Interfaces;
+﻿using System.Linq.Expressions;
+using TrelloTenderManager.Core.Interfaces;
 using TrelloTenderManager.Domain.DataAccessObjects;
 using TrelloTenderManager.Infrastructure.Interfaces;
 
@@ -24,6 +25,12 @@ public class CsvQueueBl(ICsvQueueDal csvQueueDal) : ICsvQueueBl
         };
 
         return await csvQueueDal.CreateCsvQueue(csvQueue);
+    }
+
+    /// <inheritdoc />
+    public async Task<List<CsvQueueDao>?> Read(Expression<Func<CsvQueueDao, bool>>? expression = null)
+    {
+        return await csvQueueDal.Read(expression);
     }
 
     /// <inheritdoc />

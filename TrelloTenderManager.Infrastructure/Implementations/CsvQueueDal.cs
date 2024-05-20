@@ -1,6 +1,8 @@
 ﻿using log4net;
 using Microsoft.Extensions.Configuration;
 using SQLite;
+using System.Data.Common;
+using System.Linq.Expressions;
 using TrelloTenderManager.Domain.DataAccessObjects;
 using TrelloTenderManager.Domain.Exceptions;
 using TrelloTenderManager.Infrastructure.Interfaces;
@@ -67,15 +69,41 @@ public class CsvQueueDal : ICsvQueueDal
     }
 
     /// <inheritdoc />
+    public async Task<List<CsvQueueDao>?> Read(Expression<Func<CsvQueueDao, bool>>? expression = null)
+    {
+        try
+        {
+            _logger.Info("Starting read of the CsvQueueDao from the database.");
+
+            var csvQueueDaoTable = _database.Table<CsvQueueDao>();
+            if (expression != null)
+            {
+                csvQueueDaoTable = csvQueueDaoTable.Where(expression);
+            }
+
+            var csvQueueDaos = await csvQueueDaoTable.ToListAsync();
+
+            _logger.Info("Completed read of the CsvQueueDao from the database.");
+
+            return csvQueueDaos;
+        }
+        catch (Exception exception)
+        {
+            _logger.Error($"{exception.Message} - {exception.StackTrace}");
+            throw;
+        }
+    }
+
+    /// <inheritdoc />
     public async Task<CsvQueueDao?> ReadFirstUnprocessedCsvQueue()
     {
         try
         {
-            _logger.Info("Starting the get of the CsvQueueDao from the database.");
+            _logger.Info("Starting read of the first unprocessed CsvQueueDao from the database.");
 
             var csvQueueDao = await _database.Table<CsvQueueDao>().Where(queueDao => !queueDao.IsProcessed).FirstOrDefaultAsync();
 
-            _logger.Info("Completed the get of the CsvQueueDao from the database completed.");
+            _logger.Info("Completed read of the first unprocessed CsvQueueDao from the database completed.");
 
             return csvQueueDao;
         }

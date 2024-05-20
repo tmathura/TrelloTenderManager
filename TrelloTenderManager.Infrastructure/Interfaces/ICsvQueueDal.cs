@@ -1,4 +1,5 @@
-﻿using TrelloTenderManager.Domain.DataAccessObjects;
+﻿using System.Linq.Expressions;
+using TrelloTenderManager.Domain.DataAccessObjects;
 
 namespace TrelloTenderManager.Infrastructure.Interfaces;
 
@@ -13,6 +14,13 @@ public interface ICsvQueueDal
     /// <param name="user">The CSV queue data access object.</param>
     /// <returns>The number of affected rows.</returns>
     Task<int> CreateCsvQueue(CsvQueueDao user);
+
+    /// <summary>
+    /// Reads the CSV queue entries based on the specified expression.
+    /// </summary>
+    /// <param name="expression">The expression to filter the CSV queue entries.</param>
+    /// <returns>The list of CSV queue data access objects.</returns>
+    Task<List<CsvQueueDao>?> Read(Expression<Func<CsvQueueDao, bool>>? expression = null);
 
     /// <summary>
     /// Reads the first unprocessed CSV queue entry.

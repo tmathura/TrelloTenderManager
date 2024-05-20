@@ -26,6 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TrelloTenderManager.Domain\TrelloTenderManager.Domain.csproj" />
     <ProjectReference Include="..\TrelloTenderManager.Tests.Common\TrelloTenderManager.Tests.Common.csproj" />
   </ItemGroup>
 

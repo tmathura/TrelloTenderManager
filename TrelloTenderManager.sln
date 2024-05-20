@@ -15,9 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrelloTenderManager.WebApi.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrelloTenderManager.Tests.Common", "TrelloTenderManager.Tests.Common\TrelloTenderManager.Tests.Common.csproj", "{CBB6E4A0-ADBC-4D11-BD7B-B46765E876B9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrelloTenderManager.Infrastructure", "TrelloTenderManager.Infrastructure\TrelloTenderManager.Infrastructure.csproj", "{B9756761-62FF-4604-BA86-A8097C2F8D82}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrelloTenderManager.Infrastructure", "TrelloTenderManager.Infrastructure\TrelloTenderManager.Infrastructure.csproj", "{B9756761-62FF-4604-BA86-A8097C2F8D82}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrelloTenderManager.Infrastructure.IntegrationTests", "TrelloTenderManager.Infrastructure.IntegrationTests\TrelloTenderManager.Infrastructure.IntegrationTests.csproj", "{3D662B53-3834-4DA5-9AE2-037151DC0B78}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrelloTenderManager.Infrastructure.IntegrationTests", "TrelloTenderManager.Infrastructure.IntegrationTests\TrelloTenderManager.Infrastructure.IntegrationTests.csproj", "{3D662B53-3834-4DA5-9AE2-037151DC0B78}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
