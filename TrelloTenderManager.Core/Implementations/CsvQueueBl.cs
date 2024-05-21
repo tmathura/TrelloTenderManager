@@ -17,7 +17,7 @@ public class CsvQueueBl(ICsvQueueDal csvQueueDal, ICardManager cardManager) : IC
     private readonly ILog _logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod()?.DeclaringType);
 
     /// <inheritdoc />
-    public async Task<int> CreateCsvQueue(string filename, string csvFileContent)
+    public async Task<int> CreateCsvQueue(string? filename, string? csvFileContent)
     {
         var csvQueue = new CsvQueueDao
         {
@@ -45,7 +45,7 @@ public class CsvQueueBl(ICsvQueueDal csvQueueDal, ICardManager cardManager) : IC
     }
 
     /// <inheritdoc />
-    public async Task QueueFromCsv(string filename, string fileContent)
+    public async Task QueueFromCsv(string? filename, string? fileContent)
     {
         await CreateCsvQueue(filename, fileContent);
     }

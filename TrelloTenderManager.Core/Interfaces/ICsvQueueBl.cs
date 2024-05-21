@@ -14,7 +14,7 @@ public interface ICsvQueueBl
     /// <param name="filename">The name of the CSV file.</param>
     /// <param name="csvFileContent">The content of the CSV file.</param>
     /// <returns>The ID of the created CSV queue.</returns>
-    Task<int> CreateCsvQueue(string filename, string csvFileContent);
+    Task<int> CreateCsvQueue(string? filename, string? csvFileContent);
 
     /// <summary>
     /// Reads the CSV queues based on the specified expression.
@@ -36,7 +36,7 @@ public interface ICsvQueueBl
     /// </summary>
     /// <param name="filename">The name of the CSV file.</param>
     /// <param name="fileContent">The content of the CSV file.</param>
-    Task QueueFromCsv(string filename, string fileContent);
+    Task QueueFromCsv(string? filename, string? fileContent);
 
     /// <summary>
     /// Processes the CSV queue.

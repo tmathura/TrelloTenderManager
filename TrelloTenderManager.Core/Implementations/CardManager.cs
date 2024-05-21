@@ -5,6 +5,7 @@ using System.Text;
 using TrelloDotNet.Model;
 using TrelloTenderManager.Core.Interfaces;
 using TrelloTenderManager.Domain.Models;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace TrelloTenderManager.Core.Implementations;
 
@@ -37,7 +38,22 @@ public class CardManager(ITenderCsvParser tenderCsvParser, ITrelloDotNetWrapper 
     }
 
     /// <inheritdoc />
-    public async Task<ProcessFromCsvResult> ProcessFromCsv(string fileContent)
+    public async Task<ProcessFromCsvResult> ProcessFromCsv(string[]? fileContentLines)
+    {
+        if (fileContentLines?.Length > 10)
+        {
+            throw new Exception("Csv file content is too large, rather queue this file.");
+        }
+
+        var fileContent = string.Join(Environment.NewLine, fileContentLines);
+
+        var processFromCsvResult = await ProcessFromCsv(fileContent);
+
+        return processFromCsvResult;
+    }
+
+    /// <inheritdoc />
+    public async Task<ProcessFromCsvResult> ProcessFromCsv(string? fileContent)
     {
         var processFromCsvResult = new ProcessFromCsvResult();
 

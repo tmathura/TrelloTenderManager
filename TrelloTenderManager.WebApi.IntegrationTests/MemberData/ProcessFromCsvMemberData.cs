@@ -13,7 +13,7 @@ public class ProcessFromCsvMemberData
         // Scenario 1: One line of data
         yield return
         [
-            TestDataHelper.GetSampleFileFileContent(1), // The content of the file to test with
+            TestDataHelper.GetSampleFileFileContentLines(1), // The content of the file to test with
             1, // The expected cards created count
             0 // The expected cards updated count
         ];
@@ -21,7 +21,7 @@ public class ProcessFromCsvMemberData
         // Scenario 2: Two lines of data, same tender id and lot number - should call create once
         yield return
         [
-            TestDataHelper.GetSampleFileFileContent(2), // The content of the file to test with
+            TestDataHelper.GetSampleFileFileContentLines(2), // The content of the file to test with
             1, // The expected cards created count
             0 // The expected cards updated count
         ];

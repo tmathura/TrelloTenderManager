@@ -11,7 +11,7 @@ namespace TrelloTenderManager.Core.Implementations;
 public class CsvHelperWrapper : ICsvHelperWrapper
 {
     /// <inheritdoc />
-    public List<T> GetRecords<T>(string fileContent, Type? classMapType)
+    public List<T> GetRecords<T>(string? fileContent, Type? classMapType)
     {
         using var stringReader = new StringReader(fileContent);
         var csvConfiguration = new CsvConfiguration(CultureInfo.InvariantCulture)

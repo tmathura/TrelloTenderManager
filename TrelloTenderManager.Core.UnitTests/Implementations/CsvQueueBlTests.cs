@@ -24,7 +24,7 @@ namespace TrelloTenderManager.Core.UnitTests.Implementations
         public async Task BlCreate_Should_Call_DalCreate()
         {
             // Arrange
-            const string csvFileContent = "Sample CSV content";
+            const string? csvFileContent = "Sample CSV content";
 
             _csvQueueDalMock.Setup(dal => dal.Create(It.Is<CsvQueueDao>(dao => dao.CsvContent == csvFileContent))).ReturnsAsync(1);
 

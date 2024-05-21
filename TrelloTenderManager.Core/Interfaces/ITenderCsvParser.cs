@@ -9,5 +9,5 @@ public interface ITenderCsvParser
     /// </summary>
     /// <param name="fileContent">The content of the CSV file.</param>
     /// <returns>A list of tenders.</returns>
-    List<Tender> Parse(string fileContent);
+    List<Tender> Parse(string? fileContent);
 }
