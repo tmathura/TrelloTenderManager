@@ -1,0 +1,48 @@
+﻿@model TrelloTenderManager.WebApp.Models.ShowQueueModel
+
+@{
+    ViewData["Title"] = "Current Queue";
+}
+
+<div class="container">
+    <div class="row mt-2">
+        <div class="col">
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <pre class="alert alert-danger">@Html.ValidationSummary()</pre>
+            }
+        </div>
+        @if (Model.CsvQueueItems is null || Model.CsvQueueItems.Count == 0)
+        {
+            <div class="row mt-2">
+                <div class="col">
+                    <pre class="alert alert-warning">No items in the queue.</pre>
+                </div>
+            </div>
+        }
+        else
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Filename</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">FailedReason</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var csvQueueItem in Model.CsvQueueItems)
+                    {
+                        <tr>
+                            <th scope="row">@csvQueueItem.Id</th>
+                            <td>@csvQueueItem.Filename</td>
+                            <td>@csvQueueItem.Status</td>
+                            <td>@(string.IsNullOrWhiteSpace(csvQueueItem.FailedReason) ? "N/A" : csvQueueItem.FailedReason)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+</div>

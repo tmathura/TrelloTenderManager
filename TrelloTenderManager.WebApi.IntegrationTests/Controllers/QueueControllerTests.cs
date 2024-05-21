@@ -92,6 +92,6 @@ public class QueueControllerTests : IClassFixture<CommonHelper>
         dynamic responseContent = JsonConvert.DeserializeObject(response.Content);
 
         Assert.NotNull(responseContent);
-        Assert.Equal(2, ((JArray)responseContent).Count);
+        Assert.Equal(2, ((JArray)responseContent.csvQueueItems).Count);
     }
 }

@@ -1,0 +1,62 @@
+﻿@model TrelloTenderManager.WebApp.Models.FileUploadModel
+
+@{
+    ViewData["Title"] = "Process from CSV";
+}
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // Your JavaScript code goes here
+            setRunnningState(false);
+        });
+
+        function setRunnningState(running) {
+            document.getElementById('btnSubmit').disabled = running;
+            document.getElementById('spnSubmit').style.display = running ? 'inline-block' : 'none';
+            document.getElementById('lblSubmit').innerText = running ? 'Processing...' : 'Submit';
+        }
+
+        function processCsv() {
+            setRunnningState(true);
+            document.forms['Home'].submit();
+        }
+    </script>
+}
+
+<form name="Home" asp-action="ProcessCsv" asp-controller="Card" method="post" enctype="multipart/form-data">
+    @Html.HiddenFor(fileUploadModel => fileUploadModel.Success)
+    <div class="container">
+        <div class="row mt-2">
+            <div class="col">
+                @if (!ViewData.ModelState.IsValid)
+                {
+                    <pre class="alert alert-danger">@Html.ValidationSummary()</pre>
+                }
+            </div>
+        </div>
+        @if (Model.Success)
+        {
+            <div class="row mt-2">
+                <div class="col">
+                    <pre class="alert alert-success">@Model.SuccessMessage</pre>
+                </div>
+            </div>
+        }
+        <div class="row mt-2">
+            <div class="col">
+                <label class="col-form-label">Select a CSV file to process</label>
+                <input asp-for="UploadFile" class="form-control"/>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col">
+                <button id="btnSubmit" type="submit" class="btn btn-success" onclick="processCsv();">
+                    <span id="spnSubmit" class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="display:none"></span>
+                    <label id="lblSubmit">Submit</label>
+                </button>
+            </div>
+        </div>
+    </div>
+
+</form>

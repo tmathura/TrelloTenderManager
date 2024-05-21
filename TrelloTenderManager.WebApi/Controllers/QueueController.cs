@@ -5,6 +5,7 @@ using System.Net;
 using TrelloTenderManager.Core.Interfaces;
 using TrelloTenderManager.Domain.Models.Queue;
 using TrelloTenderManager.Domain.Requests;
+using TrelloTenderManager.Domain.Responses;
 using TrelloTenderManager.WebApi.Filters;
 
 namespace TrelloTenderManager.WebApi.Controllers;
@@ -27,7 +28,7 @@ public class QueueController(ICsvQueueBl cardManager) : ControllerBase
     /// </summary>
     /// <returns>The list of CSV queue DTOs.</returns>
     [HttpGet(Name = "GetQueue")]
-    public async Task<List<CsvQueueDto>?> Get()
+    public async Task<GetQueueResponse> Get()
     {
         try
         {
@@ -39,7 +40,7 @@ public class QueueController(ICsvQueueBl cardManager) : ControllerBase
 
             _logger.Info("Got queue data successfully.");
 
-            return csvQueueDtos;
+            return new GetQueueResponse(csvQueueDtos);
         }
         catch (Exception exception)
         {

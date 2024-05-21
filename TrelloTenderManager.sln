@@ -19,6 +19,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrelloTenderManager.Infrast
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrelloTenderManager.Infrastructure.IntegrationTests", "TrelloTenderManager.Infrastructure.IntegrationTests\TrelloTenderManager.Infrastructure.IntegrationTests.csproj", "{3D662B53-3834-4DA5-9AE2-037151DC0B78}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrelloTenderManager.WebApp", "TrelloTenderManager.WebApp\TrelloTenderManager.WebApp.csproj", "{3C30AA6A-1098-46AA-9504-7DC7C884016D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrelloTenderManager.WebApp.Services", "TrelloTenderManager.WebApp.Services\TrelloTenderManager.WebApp.Services.csproj", "{3BACA6D2-087B-436C-B36C-E5CDA6BC2277}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +61,14 @@ Global
 		{3D662B53-3834-4DA5-9AE2-037151DC0B78}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D662B53-3834-4DA5-9AE2-037151DC0B78}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D662B53-3834-4DA5-9AE2-037151DC0B78}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C30AA6A-1098-46AA-9504-7DC7C884016D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C30AA6A-1098-46AA-9504-7DC7C884016D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C30AA6A-1098-46AA-9504-7DC7C884016D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C30AA6A-1098-46AA-9504-7DC7C884016D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3BACA6D2-087B-436C-B36C-E5CDA6BC2277}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BACA6D2-087B-436C-B36C-E5CDA6BC2277}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BACA6D2-087B-436C-B36C-E5CDA6BC2277}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BACA6D2-087B-436C-B36C-E5CDA6BC2277}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

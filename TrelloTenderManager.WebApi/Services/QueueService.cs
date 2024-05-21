@@ -1,57 +1,56 @@
 ﻿using log4net;
 using TrelloTenderManager.Core.Interfaces;
 
-namespace TrelloTenderManager.WebApi.Services
+namespace TrelloTenderManager.WebApi.Services;
+
+/// <summary>
+/// Represents a service for processing a queue.
+/// </summary>
+public class QueueService(ICsvQueueBl csvQueueBl) : BackgroundService
 {
+    private bool _isRunning;
+    private readonly ILog _logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod()?.DeclaringType);
+
     /// <summary>
-    /// Represents a service for processing a queue.
+    /// Executes the queue service asynchronously.
     /// </summary>
-    public class QueueService(ICsvQueueBl csvQueueBl) : BackgroundService
+    /// <param name="cancellationToken">The cancellation token.</param>
+    /// <returns>A task representing the asynchronous operation.</returns>
+    protected override Task ExecuteAsync(CancellationToken cancellationToken)
     {
-        private bool _isRunning;
-        private readonly ILog _logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod()?.DeclaringType);
+        _logger.Info("Queue service is starting.");
 
-        /// <summary>
-        /// Executes the queue service asynchronously.
-        /// </summary>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>A task representing the asynchronous operation.</returns>
-        protected override Task ExecuteAsync(CancellationToken cancellationToken)
+        _ = Task.Run(() => Process(cancellationToken), cancellationToken);
+
+        return Task.CompletedTask;
+    }
+
+    private void Process(CancellationToken cancellationToken)
+    {
+        while (!cancellationToken.IsCancellationRequested)
         {
-            _logger.Info("Queue service is starting.");
+            if (_isRunning) continue;
 
-            _ = Task.Run(() => Process(cancellationToken), cancellationToken);
+            _isRunning = true;
 
-            return Task.CompletedTask;
-        }
-
-        private void Process(CancellationToken cancellationToken)
-        {
-            while (!cancellationToken.IsCancellationRequested)
+            _ = Task.Factory.StartNew(async () =>
             {
-                if (_isRunning) continue;
+                await csvQueueBl.ProcessQueue();
 
-                _isRunning = true;
-
-                _ = Task.Factory.StartNew(async () =>
-                {
-                    await csvQueueBl.ProcessQueue();
-
-                    _isRunning = false;
-                }, cancellationToken, TaskCreationOptions.LongRunning, TaskScheduler.Current);
-            }
+                _isRunning = false;
+            }, cancellationToken, TaskCreationOptions.LongRunning, TaskScheduler.Current);
         }
+    }
 
-        /// <summary>
-        /// Stops the queue service asynchronously.
-        /// </summary>
-        /// <param name="stoppingToken">The cancellation token.</param>
-        /// <returns>A task representing the asynchronous operation.</returns>
-        public override async Task StopAsync(CancellationToken stoppingToken)
-        {
-            _logger.Info("Queue service is stopping.");
+    /// <summary>
+    /// Stops the queue service asynchronously.
+    /// </summary>
+    /// <param name="stoppingToken">The cancellation token.</param>
+    /// <returns>A task representing the asynchronous operation.</returns>
+    public override async Task StopAsync(CancellationToken stoppingToken)
+    {
+        _logger.Info("Queue service is stopping.");
 
-            await base.StopAsync(stoppingToken);
-        }
+        await base.StopAsync(stoppingToken);
     }
 }
