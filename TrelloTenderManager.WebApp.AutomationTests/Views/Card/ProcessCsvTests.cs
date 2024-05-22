@@ -33,7 +33,8 @@ public class ProcessCsvTests(ITestOutputHelper output) : SeleniumWebDriverTest(o
 
         _output.WriteLine(successMessage);
 
-        Assert.Equal($"The csv file '{sampleFilename}' was processed successfully.", successMessage);
+        var expectedSuccessMessage = $"The csv file '{sampleFilename}' was processed successfully. {expectedCardsCreatedCount} card/s were created and {expectedCardsUpdatedCount} card/s where updated";
+        Assert.Equal(expectedSuccessMessage, successMessage);
     }
 
     [Fact, Trait("Category", "AutomationTests")]

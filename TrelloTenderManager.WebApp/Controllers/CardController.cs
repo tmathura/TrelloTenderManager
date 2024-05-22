@@ -107,13 +107,8 @@ public class CardController(IFileSystem fileSystem, IWebAppClient webAppClient) 
     {
         var request = new ProcessFromCsvRequest { FileContent = fileLines.ToArray() };
         var response = await webAppClient.CardService.ProcessCsv(request);
-
-        //if (!string.IsNullOrWhiteSpace(response.AccumulatedData.InvalidAccumulatedData))
-        //{
-        //    ModelState.AddModelError("error", response.AccumulatedData.InvalidAccumulatedData);
-        //}
-
+        
         model.Success = true;
-        model.SuccessMessage = $"The csv file '{filename}' was processed successfully.";
+        model.SuccessMessage = $"The csv file '{filename}' was processed successfully. {response.ProcessFromCsvResult.CreatedCount} card/s were created and {response.ProcessFromCsvResult.UpdatedCount} card/s where updated";
     }
 }
