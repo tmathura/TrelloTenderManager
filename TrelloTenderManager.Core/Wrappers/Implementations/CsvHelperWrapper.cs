@@ -1,9 +1,9 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
 using System.Globalization;
-using TrelloTenderManager.Core.Interfaces;
+using TrelloTenderManager.Core.Wrappers.Interfaces;
 
-namespace TrelloTenderManager.Core.Implementations;
+namespace TrelloTenderManager.Core.Wrappers.Implementations;
 
 /// <summary>
 /// Wrapper class for CsvHelper library.

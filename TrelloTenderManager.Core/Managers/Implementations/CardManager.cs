@@ -3,11 +3,13 @@ using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Text;
 using TrelloDotNet.Model;
-using TrelloTenderManager.Core.Interfaces;
+using TrelloTenderManager.Core.Managers.Interfaces;
+using TrelloTenderManager.Core.Parsers.Implementations;
+using TrelloTenderManager.Core.Parsers.Interfaces;
+using TrelloTenderManager.Core.Wrappers.Interfaces;
 using TrelloTenderManager.Domain.Models;
-using static System.Net.Mime.MediaTypeNames;
 
-namespace TrelloTenderManager.Core.Implementations;
+namespace TrelloTenderManager.Core.Managers.Implementations;
 
 /// <summary>
 /// Manages the creation, update, and existence of Trello cards for tenders.

@@ -1,10 +1,10 @@
 ﻿using Microsoft.Extensions.Configuration;
 using TrelloDotNet.Model;
-using TrelloTenderManager.Core.Interfaces;
+using TrelloTenderManager.Core.Managers.Interfaces;
 using TrelloTenderManager.Domain.Enums;
 using TrelloTenderManager.Domain.Exceptions;
 
-namespace TrelloTenderManager.Core.Implementations;
+namespace TrelloTenderManager.Core.Managers.Implementations;
 
 /// <summary>
 /// Represents a manager for Trello boards.

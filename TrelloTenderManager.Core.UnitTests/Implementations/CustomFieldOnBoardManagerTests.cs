@@ -1,9 +1,9 @@
 using Microsoft.Extensions.Configuration;
 using Moq;
 using TrelloDotNet.Model;
-using TrelloTenderManager.Core.Implementations;
-using TrelloTenderManager.Core.Interfaces;
+using TrelloTenderManager.Core.Managers.Implementations;
 using TrelloTenderManager.Core.UnitTests.Helpers;
+using TrelloTenderManager.Core.Wrappers.Interfaces;
 using TrelloTenderManager.Domain.Exceptions;
 using TrelloTenderManager.Domain.Models;
 

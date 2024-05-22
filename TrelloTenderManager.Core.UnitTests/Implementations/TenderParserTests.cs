@@ -1,5 +1,5 @@
 using Bogus;
-using TrelloTenderManager.Core.Implementations;
+using TrelloTenderManager.Core.Parsers.Implementations;
 using TrelloTenderManager.Domain.Models;
 
 namespace TrelloTenderManager.Core.UnitTests.Implementations;

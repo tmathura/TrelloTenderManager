@@ -1,7 +1,13 @@
 using log4net;
 using System.Reflection;
-using TrelloTenderManager.Core.Implementations;
-using TrelloTenderManager.Core.Interfaces;
+using TrelloTenderManager.Core.Managers.Implementations;
+using TrelloTenderManager.Core.Managers.Interfaces;
+using TrelloTenderManager.Core.Parsers.Implementations;
+using TrelloTenderManager.Core.Parsers.Interfaces;
+using TrelloTenderManager.Core.Queue.Implementations;
+using TrelloTenderManager.Core.Queue.Interfaces;
+using TrelloTenderManager.Core.Wrappers.Implementations;
+using TrelloTenderManager.Core.Wrappers.Interfaces;
 using TrelloTenderManager.Infrastructure.Implementations;
 using TrelloTenderManager.Infrastructure.Interfaces;
 using TrelloTenderManager.WebApi.Filters;

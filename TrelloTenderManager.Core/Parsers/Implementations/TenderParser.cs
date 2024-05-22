@@ -1,6 +1,6 @@
 ﻿using TrelloTenderManager.Domain.Models;
 
-namespace TrelloTenderManager.Core.Implementations;
+namespace TrelloTenderManager.Core.Parsers.Implementations;
 
 /// <summary>
 /// Provides methods to validate a list of tenders.

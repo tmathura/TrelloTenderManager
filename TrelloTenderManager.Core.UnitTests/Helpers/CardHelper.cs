@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 using TrelloDotNet.Model;
-using TrelloTenderManager.Core.Implementations;
+using TrelloTenderManager.Core.Managers.Implementations;
 using TrelloTenderManager.Domain.Models;
 
 namespace TrelloTenderManager.Core.UnitTests.Helpers;

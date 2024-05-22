@@ -1,10 +1,11 @@
 ﻿using System.Reflection;
 using TrelloDotNet.Model;
-using TrelloTenderManager.Core.Interfaces;
+using TrelloTenderManager.Core.Managers.Interfaces;
+using TrelloTenderManager.Core.Wrappers.Interfaces;
 using TrelloTenderManager.Domain.Models;
 using TrelloTenderManager.Domain.Models.CustomFields;
 
-namespace TrelloTenderManager.Core.Implementations;
+namespace TrelloTenderManager.Core.Managers.Implementations;
 
 /// <summary>
 /// Manages the custom fields on a Trello card based on the properties of a Tender object.
@@ -32,7 +33,7 @@ public class CustomFieldManager(ITrelloDotNetWrapper trelloDotNetWrapper, ICusto
                 if (string.IsNullOrWhiteSpace(valueAsString)) continue;
 
                 var propertyType = property.PropertyType;
-                
+
                 CustomFieldValue customFieldValue = propertyType switch
                 {
                     _ when propertyType == typeof(bool) || propertyType == typeof(bool?) => new CustomFieldValueChecked { Checked = valueAsString },

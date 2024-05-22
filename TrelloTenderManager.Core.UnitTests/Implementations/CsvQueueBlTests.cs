@@ -1,7 +1,7 @@
 using Moq;
 using System.Linq.Expressions;
-using TrelloTenderManager.Core.Implementations;
-using TrelloTenderManager.Core.Interfaces;
+using TrelloTenderManager.Core.Managers.Interfaces;
+using TrelloTenderManager.Core.Queue.Implementations;
 using TrelloTenderManager.Domain.DataAccessObjects;
 using TrelloTenderManager.Infrastructure.Interfaces;
 

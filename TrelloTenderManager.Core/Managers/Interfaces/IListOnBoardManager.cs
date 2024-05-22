@@ -1,7 +1,7 @@
 ﻿using TrelloDotNet.Model;
 using TrelloTenderManager.Domain.Enums;
 
-namespace TrelloTenderManager.Core.Interfaces;
+namespace TrelloTenderManager.Core.Managers.Interfaces;
 
 public interface IListOnBoardManager
 {

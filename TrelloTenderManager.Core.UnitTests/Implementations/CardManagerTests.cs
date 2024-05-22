@@ -1,9 +1,11 @@
 using Moq;
 using TrelloDotNet.Model;
-using TrelloTenderManager.Core.Implementations;
-using TrelloTenderManager.Core.Interfaces;
+using TrelloTenderManager.Core.Managers.Implementations;
+using TrelloTenderManager.Core.Managers.Interfaces;
+using TrelloTenderManager.Core.Parsers.Interfaces;
 using TrelloTenderManager.Core.UnitTests.Fakers;
 using TrelloTenderManager.Core.UnitTests.Helpers;
+using TrelloTenderManager.Core.Wrappers.Interfaces;
 using TrelloTenderManager.Domain.Enums;
 using TrelloTenderManager.Domain.Models;
 

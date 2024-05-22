@@ -1,11 +1,12 @@
 ﻿using log4net;
 using System.Linq.Expressions;
-using TrelloTenderManager.Core.Interfaces;
+using TrelloTenderManager.Core.Managers.Interfaces;
+using TrelloTenderManager.Core.Queue.Interfaces;
 using TrelloTenderManager.Domain.DataAccessObjects;
 using TrelloTenderManager.Domain.Enums;
 using TrelloTenderManager.Infrastructure.Interfaces;
 
-namespace TrelloTenderManager.Core.Implementations;
+namespace TrelloTenderManager.Core.Queue.Implementations;
 
 /// <summary>
 /// Represents a CSV queue business logic implementation.
@@ -35,7 +36,7 @@ public class CsvQueueBl(ICsvQueueDal csvQueueDal, ICardManager cardManager) : IC
     {
         return await csvQueueDal.Read(expression);
     }
-    
+
     /// <inheritdoc />
     public async Task<int> UpdateCsvQueue(CsvQueueDao csvQueue)
     {
@@ -55,7 +56,7 @@ public class CsvQueueBl(ICsvQueueDal csvQueueDal, ICardManager cardManager) : IC
     {
         var csvQueueItems = await ReadCsvQueue(expression => expression.Status == QueueStatus.Unprocessed);
 
-        if (csvQueueItems is null) return; 
+        if (csvQueueItems is null) return;
 
         foreach (var csvQueueItem in csvQueueItems.Where(csvQueueItem => !string.IsNullOrWhiteSpace(csvQueueItem.CsvContent)))
         {

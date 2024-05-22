@@ -3,10 +3,10 @@ using Newtonsoft.Json;
 using TrelloDotNet;
 using TrelloDotNet.Model;
 using TrelloDotNet.Model.Search;
-using TrelloTenderManager.Core.Interfaces;
+using TrelloTenderManager.Core.Wrappers.Interfaces;
 using TrelloTenderManager.Domain.Models;
 
-namespace TrelloTenderManager.Core.Implementations;
+namespace TrelloTenderManager.Core.Wrappers.Implementations;
 
 /// <summary>
 /// Provides an implementation of the <see cref="ITrelloDotNetWrapper"/> interface using the TrelloDotNet library.

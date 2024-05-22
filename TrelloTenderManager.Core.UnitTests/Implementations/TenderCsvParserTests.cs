@@ -1,7 +1,7 @@
 using Moq;
-using TrelloTenderManager.Core.Implementations;
-using TrelloTenderManager.Core.Interfaces;
+using TrelloTenderManager.Core.Parsers.Implementations;
 using TrelloTenderManager.Core.UnitTests.Fakers;
+using TrelloTenderManager.Core.Wrappers.Interfaces;
 using TrelloTenderManager.Domain.CsvClassMaps;
 using TrelloTenderManager.Domain.Models;
 

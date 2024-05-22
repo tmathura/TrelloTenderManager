@@ -1,6 +1,6 @@
 using CsvHelper;
-using TrelloTenderManager.Core.Implementations;
 using TrelloTenderManager.Core.UnitTests.Factories;
+using TrelloTenderManager.Core.Wrappers.Implementations;
 using TrelloTenderManager.Domain.CsvClassMaps;
 using TrelloTenderManager.Domain.Models;
 

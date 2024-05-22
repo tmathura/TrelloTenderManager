@@ -1,7 +1,7 @@
 ﻿using TrelloDotNet.Model;
 using TrelloTenderManager.Domain.Models;
 
-namespace TrelloTenderManager.Core.Interfaces;
+namespace TrelloTenderManager.Core.Managers.Interfaces;
 
 public interface ICardManager
 {
@@ -11,11 +11,11 @@ public interface ICardManager
     /// <param name="tender">The tender for which to create the card.</param>
     /// <returns>The created card.</returns>
     Task<Card> Create(Tender tender);
-    
+
     /// <summary>
     /// Populates Trello cards from the content of a CSV file.
     /// </summary>
-    /// <param name="fileContent">The content of the CSV file.</param>
+    /// <param name="fileContentLines">The content of the CSV file.</param>
     /// <returns><see cref="ProcessFromCsvResult"/></returns>
     Task<ProcessFromCsvResult> ProcessFromCsv(string[]? fileContentLines);
 

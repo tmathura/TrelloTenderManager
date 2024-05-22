@@ -2,7 +2,7 @@ using log4net;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using System.Text.Json;
-using TrelloTenderManager.Core.Interfaces;
+using TrelloTenderManager.Core.Managers.Interfaces;
 using TrelloTenderManager.Domain.Requests;
 using TrelloTenderManager.Domain.Responses;
 using TrelloTenderManager.WebApi.Filters;

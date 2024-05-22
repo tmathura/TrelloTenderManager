@@ -2,7 +2,7 @@ using log4net;
 using Mapster;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
-using TrelloTenderManager.Core.Interfaces;
+using TrelloTenderManager.Core.Queue.Interfaces;
 using TrelloTenderManager.Domain.Models.Queue;
 using TrelloTenderManager.Domain.Requests;
 using TrelloTenderManager.Domain.Responses;

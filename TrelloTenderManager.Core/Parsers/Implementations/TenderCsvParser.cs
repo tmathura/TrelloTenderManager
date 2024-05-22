@@ -1,8 +1,9 @@
-﻿using TrelloTenderManager.Core.Interfaces;
+﻿using TrelloTenderManager.Core.Parsers.Interfaces;
+using TrelloTenderManager.Core.Wrappers.Interfaces;
 using TrelloTenderManager.Domain.CsvClassMaps;
 using TrelloTenderManager.Domain.Models;
 
-namespace TrelloTenderManager.Core.Implementations;
+namespace TrelloTenderManager.Core.Parsers.Implementations;
 
 /// <summary>
 /// Represents a CSV parser for tender data.

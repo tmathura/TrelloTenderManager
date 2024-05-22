@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
 using TrelloTenderManager.Domain.DataAccessObjects;
 
-namespace TrelloTenderManager.Core.Interfaces;
+namespace TrelloTenderManager.Core.Queue.Interfaces;
 
 /// <summary>
 /// Represents the business logic interface for CSV queue operations.
@@ -22,7 +22,7 @@ public interface ICsvQueueBl
     /// <param name="expression">The expression to filter the CSV queues.</param>
     /// <returns>The list of CSV queues that match the specified expression.</returns>
     Task<List<CsvQueueDao>?> ReadCsvQueue(Expression<Func<CsvQueueDao, bool>>? expression = null);
-    
+
     /// <summary>
     /// Updates the specified CSV queue.
     /// </summary>

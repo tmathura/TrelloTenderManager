@@ -1,6 +1,6 @@
 ﻿using TrelloDotNet.Model;
 
-namespace TrelloTenderManager.Core.Interfaces;
+namespace TrelloTenderManager.Core.Managers.Interfaces;
 
 public interface ICustomFieldOnBoardManager
 {

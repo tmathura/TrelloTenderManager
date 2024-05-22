@@ -1,4 +1,4 @@
-﻿namespace TrelloTenderManager.Core.Interfaces;
+﻿namespace TrelloTenderManager.Core.Wrappers.Interfaces;
 
 public interface ICsvHelperWrapper
 {

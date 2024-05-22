@@ -1,11 +1,12 @@
 ﻿using Microsoft.Extensions.Configuration;
 using System.Reflection;
 using TrelloDotNet.Model;
-using TrelloTenderManager.Core.Interfaces;
+using TrelloTenderManager.Core.Managers.Interfaces;
+using TrelloTenderManager.Core.Wrappers.Interfaces;
 using TrelloTenderManager.Domain.Exceptions;
 using TrelloTenderManager.Domain.Models;
 
-namespace TrelloTenderManager.Core.Implementations;
+namespace TrelloTenderManager.Core.Managers.Implementations;
 
 /// <summary>
 /// Represents a manager for custom fields on a Trello board.

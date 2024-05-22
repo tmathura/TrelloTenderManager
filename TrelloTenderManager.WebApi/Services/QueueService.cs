@@ -1,5 +1,5 @@
 ﻿using log4net;
-using TrelloTenderManager.Core.Interfaces;
+using TrelloTenderManager.Core.Queue.Interfaces;
 
 namespace TrelloTenderManager.WebApi.Services;
 

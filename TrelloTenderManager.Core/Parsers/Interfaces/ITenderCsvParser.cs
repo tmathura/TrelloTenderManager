@@ -1,6 +1,6 @@
 ﻿using TrelloTenderManager.Domain.Models;
 
-namespace TrelloTenderManager.Core.Interfaces;
+namespace TrelloTenderManager.Core.Parsers.Interfaces;
 
 public interface ITenderCsvParser
 {
