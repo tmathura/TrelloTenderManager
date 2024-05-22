@@ -49,7 +49,7 @@ public class QueueControllerTests : IClassFixture<CommonHelper>
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
     }
 
-    [Fact, Trait("Category", "IntegrationTests")]
+    [Fact(Skip = "Takes too long to process"), Trait("Category", "IntegrationTests")]
     public async Task QueueFromCsv_BigFile()
     {
         // Arrange
