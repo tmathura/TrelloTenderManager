@@ -23,6 +23,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrelloTenderManager.WebApp"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrelloTenderManager.WebApp.Services", "TrelloTenderManager.WebApp.Services\TrelloTenderManager.WebApp.Services.csproj", "{3BACA6D2-087B-436C-B36C-E5CDA6BC2277}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrelloTenderManager.WebApp.AutomationTests", "TrelloTenderManager.WebApp.AutomationTests\TrelloTenderManager.WebApp.AutomationTests.csproj", "{2EA098AB-348D-4937-B1A7-23B6DEB67426}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,10 @@ Global
 		{3BACA6D2-087B-436C-B36C-E5CDA6BC2277}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3BACA6D2-087B-436C-B36C-E5CDA6BC2277}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3BACA6D2-087B-436C-B36C-E5CDA6BC2277}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2EA098AB-348D-4937-B1A7-23B6DEB67426}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EA098AB-348D-4937-B1A7-23B6DEB67426}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EA098AB-348D-4937-B1A7-23B6DEB67426}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EA098AB-348D-4937-B1A7-23B6DEB67426}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

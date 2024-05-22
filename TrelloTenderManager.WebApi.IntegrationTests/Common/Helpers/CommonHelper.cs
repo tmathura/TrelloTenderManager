@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using RestSharp;
-using TrelloTenderManager.WebApi.IntegrationTests.Common.AppSettings;
+using TrelloTenderManager.WebApi.IntegrationTests.Common.Models;
 using Xunit.Abstractions;
 
 namespace TrelloTenderManager.WebApi.IntegrationTests.Common.Helpers;

@@ -31,7 +31,19 @@
             <div class="col">
                 @if (!ViewData.ModelState.IsValid)
                 {
-                    <pre class="alert alert-danger">@Html.ValidationSummary()</pre>
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach (var modelState in ViewData.ModelState)
+                            {
+                                foreach (var error in modelState.Value.Errors)
+                                {
+                                    <li>
+                                        <pre id="@modelState.Key">@error.ErrorMessage</pre>
+                                    </li>
+                                }
+                            }
+                        </ul>
+                    </div>
                 }
             </div>
         </div>
@@ -39,7 +51,7 @@
         {
             <div class="row mt-2">
                 <div class="col">
-                    <pre class="alert alert-success">@Model.SuccessMessage</pre>
+                    <pre id="preSuccessMessage" class="alert alert-success">@Model.SuccessMessage</pre>
                 </div>
             </div>
         }

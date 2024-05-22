@@ -48,3 +48,13 @@ Ensure you have the following software installed:
 3. Right-click the ***'TrelloTenderManager.WebApi'*** project and select ***'Debug -> Start Without Debugging'***.
 4. Ensure the `WebApi:ApiBaseUrl` setting in ***'TrelloTenderManager.WebApi.IntegrationTests\appsettings.json'*** is set to the Web API URL.
 5. Run all tests in the ***'TrelloTenderManager.WebApi.IntegrationTests'*** project.
+
+# How to run the WebApp front-end tests
+
+1. Open the ***'TrelloTenderManager.sln'*** solution with Visual Studio 2022.
+2. In the ***'TrelloTenderManager.WebApi\appsettings.Development.json'*** file, set the `Trello: ApiKey`, `Trello: Token`, and `Trello: BoardId` with the values obtained in the "Getting Started" section.
+3. Right-click the ***'TrelloTenderManager.WebApi'*** project and select ***'Debug -> Start Without Debugging'***.
+4. Ensure the `WebApi:ApiBaseUrl` setting in ***'TrelloTenderManager.WebApp\appsettings.json'*** is set to the Web API URL.
+5. Right click on the ***'TrelloTenderManager.WebApp'*** project and click ***'Debug -> Start Without Debugging'***.
+8. Ensure the `WebAppOptions:Url` setting in ***'TrelloTenderManager.WebApp.AutomationTests\appsettings.json'*** is set to the Web App URL.
+7. Run all the tests for ***'TrelloTenderManager.WebApp.AutomationTests'***

@@ -1,4 +1,4 @@
-﻿namespace TrelloTenderManager.WebApi.IntegrationTests.Common.AppSettings;
+﻿namespace TrelloTenderManager.WebApi.IntegrationTests.Common.Models;
 
 public class WebApi
 {

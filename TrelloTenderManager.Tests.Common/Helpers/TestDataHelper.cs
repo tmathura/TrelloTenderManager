@@ -4,6 +4,21 @@ public static class TestDataHelper
 {
     private static readonly DirectoryInfo CurrentDirectory = new(Environment.CurrentDirectory);
 
+    /// <summary>
+    /// Gets the path of the sample file for the specified test scenario.
+    /// </summary>
+    /// <param name="testScenario">The test scenario number.</param>
+    /// <returns></returns>
+    public static string GetSampleFilePath(int testScenario)
+    {
+        return Path.Combine($@"{CurrentDirectory}\Test Files\Sample Csv Files", $"Sample File - Scenario{testScenario}.csv");
+    }
+
+    /// <summary>
+    /// Gets the name of the sample file for the specified test scenario.
+    /// </summary>
+    /// <param name="testScenario">The test scenario number.</param>
+    /// <returns></returns>
     public static string GetSampleFilename(int testScenario)
     {
         var path = Path.Combine($@"{CurrentDirectory}\Test Files\Sample Csv Files", $"Sample File - Scenario{testScenario}.csv");

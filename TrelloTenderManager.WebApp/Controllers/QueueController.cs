@@ -57,7 +57,7 @@ public class QueueController(IFileSystem fileSystem, IWebAppClient webAppClient)
         }
         catch (Exception exception)
         {
-            ModelState.AddModelError("error", exception.Message);
+            ModelState.AddModelError("post-error", exception.Message);
 
             _logger.Error($"{exception.Message} - {exception.StackTrace}");
         }
@@ -79,7 +79,7 @@ public class QueueController(IFileSystem fileSystem, IWebAppClient webAppClient)
         }
         catch (Exception exception)
         {
-            ModelState.AddModelError("error", exception.Message);
+            ModelState.AddModelError("post-error", exception.Message);
 
             _logger.Error($"{exception.Message} - {exception.StackTrace}");
         }
